@@ -58,6 +58,19 @@ function CustomLink(props: AnchorHTMLAttributes<HTMLAnchorElement>) {
 
 function CustomCode(props: HTMLAttributes<HTMLElement>) {
   const { className, ...otherProps } = props;
+  const otherPropsRecord = otherProps as Record<string, unknown>;
+  const dataLanguage = otherPropsRecord["data-language"];
+  const dataLineNumbers = otherPropsRecord["data-line-numbers"];
+  const normalizedClassName = cn(className);
+  const isBlockCode =
+    normalizedClassName.includes("language-") ||
+    normalizedClassName.includes("data-language") ||
+    Boolean(dataLanguage) ||
+    Boolean(dataLineNumbers);
+
+  if (isBlockCode) {
+    return <code className={normalizedClassName} {...otherProps} />;
+  }
 
   return (
     <code

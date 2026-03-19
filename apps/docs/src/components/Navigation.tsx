@@ -51,8 +51,8 @@ const NavItem = forwardRef<
       onMouseEnter={onMouseEnter}
       className={cn(
         focusClasses,
-        "duration-180 z-[51] -mb-px inline-flex shrink-0 items-center justify-center px-4 outline-white transition-colors hover:text-white",
-        active && "text-white shadow-[inset_0_-2px_0px_#FFC233]",
+        "duration-180 z-[51] -mb-px inline-flex shrink-0 items-center justify-center px-4 no-underline outline-white transition-colors hover:text-white",
+        active && "text-white",
         !active && "hover:text-white",
         onMouseEnter && "pr-2",
         className
@@ -142,7 +142,7 @@ const NavDropdownLink = forwardRef<
       ref={ref}
       className={cn(
         focusClasses,
-        "duration-180 group flex select-none flex-col justify-center rounded-lg px-4 py-3 outline-white transition-colors hover:bg-white focus-visible:bg-white",
+        "duration-180 group flex select-none flex-col justify-center rounded-lg px-4 py-3 no-underline outline-white transition-colors hover:bg-white focus-visible:bg-white",
         className
       )}
       {...otherProps}

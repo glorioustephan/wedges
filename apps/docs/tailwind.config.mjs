@@ -1,9 +1,7 @@
 import { wedgesPalette, wedgesTW } from "@lemonsqueezy/wedges";
-import type { ThemableColorScale } from "@lemonsqueezy/wedges/src/tw-plugin/foundation/colors/themableColors";
 import tailwindTypography from "@tailwindcss/typography";
-import type { Config } from "tailwindcss";
 
-const primaryBlue: ThemableColorScale = {
+const primaryBlue = {
   100: "#DAF0FF",
   200: "#B5DEFF",
   300: "#90C9FF",
@@ -13,10 +11,10 @@ const primaryBlue: ThemableColorScale = {
   700: "#2356B7",
   800: "#163C93",
   900: "#0D297A",
-  DEFAULT: "#4796FF", // 500
+  DEFAULT: "#4796FF",
 };
 
-const config: Config = {
+const config = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -25,7 +23,6 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
     "./public/docs/**/*.mdx",
 
-    // This is required in order to include Tailwind classes from Wedges.
     "node_modules/@lemonsqueezy/wedges/dist/**/*.{js,ts,jsx,tsx}",
   ],
   darkMode: "class",
@@ -64,7 +61,6 @@ const config: Config = {
           "100%": { opacity: "0" },
         },
       },
-
       maxWidth: {
         "7xl": "82rem",
         "8xl": "88rem",
@@ -88,8 +84,8 @@ const config: Config = {
       container: {
         center: true,
         screens: {
-          md: "100%",
-          xl: "87rem", // 82 + 5 for padding
+          md: "100vw",
+          xl: "87rem",
         },
         padding: {
           DEFAULT: "2.25rem",

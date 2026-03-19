@@ -1,8 +1,63 @@
-@import "./docsearch.css";
+@config "../../tailwind.config.mjs";
+@import "tailwindcss";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@theme inline {
+  --color-background: hsl(var(--wg-background) / 1);
+  --color-foreground: hsl(var(--wg-foreground) / 1);
+
+  --color-primary: hsl(var(--wg-primary) / 1);
+  --color-primary-50: hsl(var(--wg-primary-50) / 1);
+  --color-primary-100: hsl(var(--wg-primary-100) / 1);
+  --color-primary-200: hsl(var(--wg-primary-200) / 1);
+  --color-primary-300: hsl(var(--wg-primary-300) / 1);
+  --color-primary-400: hsl(var(--wg-primary-400) / 1);
+  --color-primary-500: hsl(var(--wg-primary-500) / 1);
+  --color-primary-600: hsl(var(--wg-primary-600) / 1);
+  --color-primary-700: hsl(var(--wg-primary-700) / 1);
+  --color-primary-800: hsl(var(--wg-primary-800) / 1);
+  --color-primary-900: hsl(var(--wg-primary-900) / 1);
+
+  --color-secondary: hsl(var(--wg-secondary) / 1);
+  --color-secondary-50: hsl(var(--wg-secondary-50) / 1);
+  --color-secondary-100: hsl(var(--wg-secondary-100) / 1);
+  --color-secondary-200: hsl(var(--wg-secondary-200) / 1);
+  --color-secondary-300: hsl(var(--wg-secondary-300) / 1);
+  --color-secondary-400: hsl(var(--wg-secondary-400) / 1);
+  --color-secondary-500: hsl(var(--wg-secondary-500) / 1);
+  --color-secondary-600: hsl(var(--wg-secondary-600) / 1);
+  --color-secondary-700: hsl(var(--wg-secondary-700) / 1);
+  --color-secondary-800: hsl(var(--wg-secondary-800) / 1);
+  --color-secondary-900: hsl(var(--wg-secondary-900) / 1);
+
+  --color-surface: hsl(var(--wg-surface) / 1);
+  --color-surface-50: hsl(var(--wg-surface-50) / 1);
+  --color-surface-100: hsl(var(--wg-surface-100) / 1);
+  --color-surface-200: hsl(var(--wg-surface-200) / 1);
+  --color-surface-300: hsl(var(--wg-surface-300) / 1);
+  --color-surface-400: hsl(var(--wg-surface-400) / 1);
+  --color-surface-500: hsl(var(--wg-surface-500) / 1);
+  --color-surface-600: hsl(var(--wg-surface-600) / 1);
+  --color-surface-700: hsl(var(--wg-surface-700) / 1);
+  --color-surface-800: hsl(var(--wg-surface-800) / 1);
+  --color-surface-900: hsl(var(--wg-surface-900) / 1);
+  --color-surface-overlay: hsl(var(--wg-surface-overlay) / 1);
+  --color-surface-overlay-foreground: hsl(var(--wg-surface-overlay-foreground) / 1);
+  --color-surface-overlay-focus: hsl(var(--wg-surface-overlay-focus) / 1);
+
+  --color-destructive: hsl(var(--wg-destructive) / 1);
+  --color-destructive-50: hsl(var(--wg-destructive-50) / 1);
+  --color-destructive-100: hsl(var(--wg-destructive-100) / 1);
+  --color-destructive-200: hsl(var(--wg-destructive-200) / 1);
+  --color-destructive-300: hsl(var(--wg-destructive-300) / 1);
+  --color-destructive-400: hsl(var(--wg-destructive-400) / 1);
+  --color-destructive-500: hsl(var(--wg-destructive-500) / 1);
+  --color-destructive-600: hsl(var(--wg-destructive-600) / 1);
+  --color-destructive-700: hsl(var(--wg-destructive-700) / 1);
+  --color-destructive-800: hsl(var(--wg-destructive-800) / 1);
+  --color-destructive-900: hsl(var(--wg-destructive-900) / 1);
+}
+
+@import "./docsearch.css";
 
 @layer base {
   h1 {
@@ -29,8 +84,21 @@
   }
 
   .step:before {
-    @apply absolute inline-flex h-10 w-10 items-center justify-center rounded-full border border-surface-100 bg-white font-sans text-sm font-medium text-surface-900 ring-4 ring-white;
-    @apply ml-[-52px];
+    position: absolute;
+    display: inline-flex;
+    height: 2.5rem;
+    width: 2.5rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    border: 1px solid hsl(var(--wg-surface-100));
+    background-color: #fff;
+    font-family: var(--font-sans), Inter, ui-sans-serif, system-ui, -apple-system;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: hsl(var(--wg-surface-900));
+    box-shadow: 0 0 0 4px #fff;
+    margin-left: -52px;
     content: counter(step);
   }
 }

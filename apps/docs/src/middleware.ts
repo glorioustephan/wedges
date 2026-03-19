@@ -43,7 +43,6 @@ function getContentSecurityPolicyHeaderValue(nonce: string, reportUri: string): 
     "default-src": [`'none'`],
     "frame-ancestors": [`'none'`],
     "font-src": [`'self'`, "data:", "fonts.gstatic.com", "fonts.googleapis.com"],
-    "data:-src": [`'self'`],
     "form-action": [`'self'`],
     "frame-src": [`'self'`, "*.youtube.com"],
     "connect-src": [`'self'`, "api.management.inkeep.com"],

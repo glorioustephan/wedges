@@ -13,6 +13,13 @@ import Fathom from "@/components/Fathom";
 import { Header } from "@/components/header/header";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("http://localhost:3000"),
+  icons: {
+    icon: "/favicon.ico",
+  },
+  openGraph: {
+    images: ["/opengraph-image.png"],
+  },
   title: "Wedges Docs",
   description: siteConfig.siteDescription,
 };

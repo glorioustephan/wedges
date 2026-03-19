@@ -24,12 +24,12 @@
   },
   "devDependencies": {
     "@docsearch/react": "^3.6.1",
+    "@tailwindcss/postcss": "^4.0.0",
     "@lemonsqueezy/wedges": "workspace:*",
     "@shikijs/transformers": "^1.14.1",
     "@tailwindcss/typography": "^0.5.14",
     "@types/hast": "^3.0.4",
     "@types/unist": "^3.0.3",
-    "autoprefixer": "^10.4.20",
     "hast-util-from-html-isomorphic": "^2.0.0",
     "mdast-util-toc": "^7.1.0",
     "next-mdx-remote": "^5.0.0",

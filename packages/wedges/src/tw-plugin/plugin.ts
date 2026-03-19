@@ -152,10 +152,11 @@ const corePlugin = (
           color: `hsl(var(--${prefix}-foreground))`,
           backgroundColor: `hsl(var(--${prefix}-background))`,
         },
+
+        ...resolved.utilities,
       });
 
       addUtilities({
-        ...resolved.utilities,
         ".wg-antialiased": {
           "-webkit-font-smoothing": "var(--wg-font-smooth--webkit)",
           "-moz-osx-font-smoothing": "var(--wg-font-smooth--moz)",

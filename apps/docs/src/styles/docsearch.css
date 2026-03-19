@@ -53,7 +53,15 @@
 }
 
 .DocSearch-VisuallyHiddenForAccessibility {
-  @apply sr-only;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 }
 
 .DocSearch-Container {
@@ -448,7 +456,7 @@ svg.DocSearch-Hit-Select-Icon {
   background: var(--docsearch-key-hover-background);
 }
 
-@screen sm {
+@media (width >= 640px) {
   .DocSearch-Container {
     height: 100vh;
   }

@@ -1,0 +1,623 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - generic [ref=e5]:
+        - link "Lemon Squeezy home page" [ref=e6] [cursor=pointer]:
+          - /url: "#"
+          - img [ref=e7]
+        - navigation "Main" [ref=e24]:
+          - list [ref=e26]:
+            - listitem [ref=e27]:
+              - button "Platform" [ref=e28]:
+                - text: Platform
+                - img [ref=e29]
+            - listitem [ref=e31]:
+              - button "Resources" [ref=e32]:
+                - text: Resources
+                - img [ref=e33]
+            - listitem [ref=e35]:
+              - link "Pricing" [ref=e36] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e37]:
+              - link "Wedges" [ref=e38] [cursor=pointer]:
+                - /url: /
+            - listitem [ref=e39]:
+              - link "Help" [ref=e40] [cursor=pointer]:
+                - /url: "#"
+        - navigation "Actions" [ref=e41]:
+          - list [ref=e42]:
+            - listitem [ref=e43]:
+              - link "Sign in" [ref=e44] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e45]:
+              - link "Get started →" [ref=e46] [cursor=pointer]:
+                - /url: "#"
+                - text: Get started
+                - generic [ref=e47]: →
+    - generic [ref=e49]:
+      - link "Wedges" [ref=e50] [cursor=pointer]:
+        - /url: "#"
+        - heading "Wedges" [level=1] [ref=e51]
+      - navigation "Wedges Nav" [ref=e52]:
+        - link "React" [ref=e53] [cursor=pointer]:
+          - /url: "#"
+        - link "Figma" [ref=e54] [cursor=pointer]:
+          - /url: "#/figma"
+        - link "Docs" [ref=e55] [cursor=pointer]:
+          - /url: /wedges/docs
+        - link "Components" [ref=e56] [cursor=pointer]:
+          - /url: /wedges/docs/components
+      - navigation "Social Links" [ref=e57]:
+        - link "GitHub" [ref=e58] [cursor=pointer]:
+          - /url: https://github.com/lmsqueezy/wedges
+    - generic [ref=e59]:
+      - complementary [ref=e60]:
+        - button "Quick search Quick search… ⌘ K" [ref=e62]:
+          - generic [ref=e63]:
+            - img "Quick search" [ref=e64]
+            - generic [ref=e66]: Quick search…
+          - generic [ref=e67]:
+            - generic "Command" [ref=e68]: ⌘
+            - generic [ref=e69]: K
+        - navigation [ref=e73]:
+          - generic [ref=e74]:
+            - generic [ref=e75]:
+              - heading "Getting Started" [level=3] [ref=e76]
+              - button [ref=e77]:
+                - img [ref=e78]
+            - generic [ref=e80]:
+              - link "Introduction" [ref=e82] [cursor=pointer]:
+                - /url: /wedges/docs
+              - link "Installation" [ref=e84] [cursor=pointer]:
+                - /url: /wedges/docs/getting-started/installation
+              - link "Requirements" [ref=e86] [cursor=pointer]:
+                - /url: /wedges/docs/getting-started/requirements
+          - generic [ref=e87]:
+            - generic [ref=e88]:
+              - heading "Installation" [level=3] [ref=e89]
+              - button [ref=e90]:
+                - img [ref=e91]
+            - generic [ref=e93]:
+              - link "Next.js" [ref=e95] [cursor=pointer]:
+                - /url: /wedges/docs/installation/nextjs
+              - link "Vite" [ref=e97] [cursor=pointer]:
+                - /url: /wedges/docs/installation/vite
+              - link "Remix" [ref=e99] [cursor=pointer]:
+                - /url: /wedges/docs/installation/remix
+              - link "Gatsby" [ref=e101] [cursor=pointer]:
+                - /url: /wedges/docs/installation/gatsby
+              - link "Astro" [ref=e103] [cursor=pointer]:
+                - /url: /wedges/docs/installation/astro
+              - link "Laravel" [ref=e105] [cursor=pointer]:
+                - /url: /wedges/docs/installation/laravel
+              - link "Manual" [ref=e107] [cursor=pointer]:
+                - /url: /wedges/docs/installation/manual
+          - generic [ref=e108]:
+            - generic [ref=e109]:
+              - heading "Theming" [level=3] [ref=e110]
+              - button [ref=e111]:
+                - img [ref=e112]
+            - generic [ref=e114]:
+              - link "Tailwind Plugin" [ref=e116] [cursor=pointer]:
+                - /url: /wedges/docs/theming/tailwind-css-plugin
+              - link "Color System" [ref=e118] [cursor=pointer]:
+                - /url: /wedges/docs/theming/color-system
+              - link "Default Themes" [ref=e120] [cursor=pointer]:
+                - /url: /wedges/docs/theming/default-themes
+              - link "Custom Themes" [ref=e122] [cursor=pointer]:
+                - /url: /wedges/docs/theming/custom-themes
+              - link "Additional Utilities" [ref=e124] [cursor=pointer]:
+                - /url: /wedges/docs/theming/additional-utilities
+          - generic [ref=e125]:
+            - generic [ref=e126]:
+              - heading "Components" [level=3] [ref=e127]
+              - button [ref=e128]:
+                - img [ref=e129]
+            - generic [ref=e131]:
+              - link "Alert" [ref=e133] [cursor=pointer]:
+                - /url: /wedges/docs/components/alert
+              - link "Avatar" [ref=e135] [cursor=pointer]:
+                - /url: /wedges/docs/components/avatar
+              - link "Avatar Group" [ref=e137] [cursor=pointer]:
+                - /url: /wedges/docs/components/avatar-group
+              - link "Badge" [ref=e139] [cursor=pointer]:
+                - /url: /wedges/docs/components/badge
+              - link "Button" [ref=e141] [cursor=pointer]:
+                - /url: /wedges/docs/components/button
+              - link "Button Group" [ref=e143] [cursor=pointer]:
+                - /url: /wedges/docs/components/button-group
+              - link "Checkbox" [ref=e145] [cursor=pointer]:
+                - /url: /wedges/docs/components/checkbox
+              - link "Checkbox Group" [ref=e147] [cursor=pointer]:
+                - /url: /wedges/docs/components/checkbox-group
+              - link "Dropdown Menu" [ref=e149] [cursor=pointer]:
+                - /url: /wedges/docs/components/dropdown-menu
+              - link "Input" [ref=e151] [cursor=pointer]:
+                - /url: /wedges/docs/components/input
+              - link "Kbd" [ref=e153] [cursor=pointer]:
+                - /url: /wedges/docs/components/kbd
+              - link "Label" [ref=e155] [cursor=pointer]:
+                - /url: /wedges/docs/components/label
+              - link "Loading" [ref=e157] [cursor=pointer]:
+                - /url: /wedges/docs/components/loading
+              - link "Popover" [ref=e159] [cursor=pointer]:
+                - /url: /wedges/docs/components/popover
+              - link "Progress Bar" [ref=e161] [cursor=pointer]:
+                - /url: /wedges/docs/components/progress-bar
+              - link "Progress Circle" [ref=e163] [cursor=pointer]:
+                - /url: /wedges/docs/components/progress-circle
+              - link "Radio Group" [ref=e165] [cursor=pointer]:
+                - /url: /wedges/docs/components/radio-group
+              - link "Select New" [ref=e167] [cursor=pointer]:
+                - /url: /wedges/docs/components/select
+                - text: Select
+                - generic [ref=e169]: New
+              - link "Slider" [ref=e171] [cursor=pointer]:
+                - /url: /wedges/docs/components/slider
+              - link "Switch" [ref=e173] [cursor=pointer]:
+                - /url: /wedges/docs/components/switch
+              - link "Switch Group" [ref=e175] [cursor=pointer]:
+                - /url: /wedges/docs/components/switch-group
+              - link "Tabs" [ref=e177] [cursor=pointer]:
+                - /url: /wedges/docs/components/tabs
+              - link "Tag" [ref=e179] [cursor=pointer]:
+                - /url: /wedges/docs/components/tag
+              - link "Textarea" [ref=e181] [cursor=pointer]:
+                - /url: /wedges/docs/components/textarea
+              - link "Toggle" [ref=e183] [cursor=pointer]:
+                - /url: /wedges/docs/components/toggle
+              - link "Toggle Group" [ref=e185] [cursor=pointer]:
+                - /url: /wedges/docs/components/toggle-group
+              - link "Tooltip" [ref=e187] [cursor=pointer]:
+                - /url: /wedges/docs/components/tooltip
+              - generic [ref=e188]:
+                - generic [ref=e189]: Number Input
+                - generic [ref=e191]: In progress
+      - main [ref=e192]:
+        - generic [ref=e194]:
+          - generic "Badge" [ref=e195]:
+            - heading "Badge" [level=2] [ref=e196]
+            - paragraph [ref=e197]: A compact element displaying labels, numbers, or indicators, often used for status, notifications, or categorization.
+            - link "Source" [ref=e199] [cursor=pointer]:
+              - /url: https://github.com/lmsqueezy/wedges/blob/main/packages/wedges/src/components/Badge/Badge.tsx
+              - img [ref=e200]
+              - text: Source
+          - generic [ref=e202]:
+            - generic [ref=e203]:
+              - tablist [ref=e204]:
+                - tab "Preview" [selected] [ref=e205]:
+                  - img [ref=e206]
+                  - generic [ref=e209]: Preview
+                - tab "Code" [ref=e210]:
+                  - img [ref=e211]
+                  - generic [ref=e214]: Code
+              - tabpanel "Preview" [ref=e215]:
+                - generic [ref=e216]:
+                  - generic [ref=e219]:
+                    - img [ref=e220]
+                    - generic [ref=e221]: Label
+                    - img [ref=e222]
+                  - button [ref=e223]:
+                    - img [ref=e224]
+            - heading "Usage" [level=3] [ref=e230]:
+              - text: Usage
+              - link [ref=e231] [cursor=pointer]:
+                - /url: "#usage"
+                - img [ref=e232]
+            - figure [ref=e236]:
+              - generic [ref=e237]:
+                - code [ref=e238]:
+                  - generic [ref=e239]: "import { Badge } from \"@lemonsqueezy/wedges\";"
+                - button "Copy code to clipboard" [ref=e240]:
+                  - img [ref=e241]
+            - figure [ref=e243]:
+              - generic [ref=e244]:
+                - code [ref=e245]:
+                  - generic [ref=e246]: <Badge>Label</Badge>
+                - button "Copy code to clipboard" [ref=e247]:
+                  - img [ref=e248]
+            - heading "API Reference" [level=3] [ref=e250]:
+              - text: API Reference
+              - link [ref=e251] [cursor=pointer]:
+                - /url: "#api-reference"
+                - img [ref=e252]
+            - paragraph [ref=e256]:
+              - text: In addition to all the props defined as
+              - code [ref=e257]: HTMLAttributes<HTMLSpanElement>
+              - text: ","
+              - code [ref=e258]: Badge
+              - text: "component also includes the following props:"
+            - table [ref=e260]:
+              - rowgroup [ref=e261]:
+                - row "Prop Value Default" [ref=e262]:
+                  - columnheader "Prop" [ref=e263]
+                  - columnheader "Value" [ref=e264]
+                  - columnheader "Default" [ref=e265]
+              - rowgroup [ref=e266]:
+                - row "after ReactElement<HTMLElement> /" [ref=e267]:
+                  - cell "after" [ref=e268]:
+                    - code [ref=e270]: after
+                  - cell "ReactElement<HTMLElement>" [ref=e271]:
+                    - code [ref=e273]: ReactElement<HTMLElement>
+                  - cell / [ref=e274]:
+                    - generic [ref=e276]: /
+                - row "before ReactElement<HTMLElement> /" [ref=e277]:
+                  - cell "before" [ref=e278]:
+                    - code [ref=e280]: before
+                  - cell "ReactElement<HTMLElement>" [ref=e281]:
+                    - code [ref=e283]: ReactElement<HTMLElement>
+                  - cell / [ref=e284]:
+                    - generic [ref=e286]: /
+                - row "color BadgeColors \"gray\"" [ref=e287]:
+                  - cell "color" [ref=e288]:
+                    - code [ref=e290]: color
+                  - cell "BadgeColors" [ref=e291]:
+                    - generic [ref=e292]:
+                      - code [ref=e293]: BadgeColors
+                      - img [ref=e295]
+                  - cell "\"gray\"" [ref=e297]:
+                    - code [ref=e299]: "\"gray\""
+                - row "shape \"rounded\" | \"pill\" \"rounded\"" [ref=e300]:
+                  - cell "shape" [ref=e301]:
+                    - code [ref=e303]: shape
+                  - cell "\"rounded\" | \"pill\"" [ref=e304]:
+                    - code [ref=e306]: "\"rounded\" | \"pill\""
+                  - cell "\"rounded\"" [ref=e307]:
+                    - code [ref=e309]: "\"rounded\""
+                - row "size \"sm\" | \"md\" \"md\"" [ref=e310]:
+                  - cell "size" [ref=e311]:
+                    - code [ref=e313]: size
+                  - cell "\"sm\" | \"md\"" [ref=e314]:
+                    - code [ref=e316]: "\"sm\" | \"md\""
+                  - cell "\"md\"" [ref=e317]:
+                    - code [ref=e319]: "\"md\""
+                - row "stroke boolean false" [ref=e320]:
+                  - cell "stroke" [ref=e321]:
+                    - code [ref=e323]: stroke
+                  - cell "boolean" [ref=e324]:
+                    - code [ref=e326]: boolean
+                  - cell "false" [ref=e327]:
+                    - code [ref=e329]: "false"
+            - heading "Examples" [level=3] [ref=e330]:
+              - text: Examples
+              - link [ref=e331] [cursor=pointer]:
+                - /url: "#examples"
+                - img [ref=e332]
+            - paragraph [ref=e336]:
+              - text: The following example shows different variants of the
+              - code [ref=e337]: Badge
+              - text: component.
+            - generic [ref=e338]:
+              - tablist [ref=e339]:
+                - tab "Preview" [selected] [ref=e340]:
+                  - img [ref=e341]
+                  - generic [ref=e344]: Preview
+                - tab "Code" [ref=e345]:
+                  - img [ref=e346]
+                  - generic [ref=e349]: Code
+              - tabpanel "Preview" [ref=e350]:
+                - generic [ref=e351]:
+                  - generic [ref=e354]:
+                    - generic [ref=e355]:
+                      - generic [ref=e356]:
+                        - img [ref=e357]
+                        - generic [ref=e359]: Paid
+                      - generic [ref=e360]:
+                        - img [ref=e361]
+                        - generic [ref=e363]: Active
+                      - generic [ref=e364]:
+                        - img [ref=e365]
+                        - generic [ref=e367]: Paid
+                      - generic [ref=e368]:
+                        - img [ref=e369]
+                        - generic [ref=e371]: "200"
+                    - generic [ref=e372]:
+                      - generic [ref=e373]:
+                        - img [ref=e374]
+                        - generic [ref=e377]: Rejected
+                      - generic [ref=e378]:
+                        - img [ref=e379]
+                        - generic [ref=e382]: Chargeback
+                      - generic [ref=e383]:
+                        - img [ref=e384]
+                        - generic [ref=e385]: Disconnected
+                    - generic [ref=e386]:
+                      - generic [ref=e387]:
+                        - img [ref=e388]
+                        - generic [ref=e391]: Void
+                      - generic [ref=e392]:
+                        - img [ref=e393]
+                        - generic [ref=e396]: Expired
+                      - generic [ref=e397]:
+                        - img [ref=e398]
+                        - generic [ref=e401]: Draft
+                      - generic [ref=e402]:
+                        - img [ref=e403]
+                        - generic [ref=e405]: Online
+                    - generic [ref=e406]:
+                      - generic [ref=e407]:
+                        - img [ref=e408]
+                        - generic [ref=e413]: Processing
+                      - generic [ref=e414]:
+                        - img [ref=e415]
+                        - generic [ref=e417]: Flagged
+                      - generic [ref=e419]: Washington D.C.
+                    - generic [ref=e420]:
+                      - generic [ref=e422]: Special
+                      - generic [ref=e424]: Trial
+                      - generic [ref=e425]:
+                        - img [ref=e426]
+                        - generic [ref=e428]: Bookmarked
+                      - generic [ref=e429]:
+                        - img [ref=e430]
+                        - generic [ref=e433]: Live
+                    - generic [ref=e434]:
+                      - generic [ref=e435]:
+                        - img [ref=e436]
+                        - generic [ref=e439]: Moved
+                      - generic [ref=e441]: New
+                      - generic [ref=e442]:
+                        - img [ref=e443]
+                        - generic [ref=e446]: Secure
+                      - generic [ref=e447]:
+                        - img [ref=e448]
+                        - generic [ref=e451]: Locked
+                    - generic [ref=e452]:
+                      - generic [ref=e454]: Beta
+                      - generic [ref=e455]:
+                        - img [ref=e456]
+                        - generic [ref=e461]: Hello!
+                      - generic [ref=e462]:
+                        - img [ref=e463]
+                        - generic [ref=e465]: 1m 30s
+                      - generic [ref=e466]:
+                        - img [ref=e467]
+                        - generic [ref=e470]: Pinned
+                      - generic [ref=e472]: "4"
+                    - generic [ref=e473]:
+                      - generic [ref=e474]:
+                        - img [ref=e475]
+                        - generic [ref=e477]: Design Systems
+                      - generic [ref=e478]:
+                        - img [ref=e703]
+                        - generic [ref=e483]: "@ormanclark"
+                      - generic [ref=e484]:
+                        - img [ref=e485]
+                        - generic [ref=e490]: Free Wi-Fi
+                  - button [ref=e491]:
+                    - img [ref=e492]
+          - generic [ref=e498]:
+            - link "Avatar Group" [ref=e499] [cursor=pointer]:
+              - /url: /wedges/docs/components/avatar-group
+              - img [ref=e500]
+              - text: Avatar Group
+            - link "Button" [ref=e502] [cursor=pointer]:
+              - /url: /wedges/docs/components/button
+              - text: Button
+              - img [ref=e503]
+          - generic [ref=e505]:
+            - link "Edit this page" [ref=e506] [cursor=pointer]:
+              - /url: https://github.com/lmsqueezy/wedges/edit/main/apps/docs/public/docs/components/badge.mdx
+              - img [ref=e507]
+              - generic [ref=e509]: Edit this page
+            - button "Back to top" [ref=e510]:
+              - img [ref=e511]
+              - generic [ref=e513]: Back to top
+    - contentinfo [ref=e514]:
+      - generic [ref=e516]:
+        - generic [ref=e517]:
+          - generic [ref=e518]:
+            - paragraph [ref=e519]: Elevate your business
+            - heading "Take your business to the next level with Lemon Squeezy" [level=2] [ref=e520]
+          - link "Get started for free" [ref=e522] [cursor=pointer]:
+            - /url: "#"
+            - generic [ref=e523]: Get started for free
+            - generic [ref=e524]: →
+        - img "Get started with Lemon Squeezy" [ref=e526]
+      - navigation [ref=e527]:
+        - list [ref=e528]:
+          - listitem [ref=e529]:
+            - link "Go to Lemon Squeezy home page" [ref=e530] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e531]
+          - generic [ref=e536]:
+            - listitem [ref=e537]:
+              - paragraph [ref=e538]: Resources
+              - list [ref=e539]:
+                - listitem [ref=e540]:
+                  - link "Help Center →" [ref=e541] [cursor=pointer]:
+                    - /url: "#"
+                    - generic [ref=e542]: Help Center
+                    - generic [ref=e543]: →
+                - listitem [ref=e544]:
+                  - link "Help Docs →" [ref=e545] [cursor=pointer]:
+                    - /url: "#"
+                    - generic [ref=e546]: Help Docs
+                    - generic [ref=e547]: →
+                - listitem [ref=e548]:
+                  - link "Developer Docs →" [ref=e549] [cursor=pointer]:
+                    - /url: "#"
+                    - generic [ref=e550]: Developer Docs
+                    - generic [ref=e551]: →
+                - listitem [ref=e552]:
+                  - link "Guide to MoR →" [ref=e553] [cursor=pointer]:
+                    - /url: "#"
+                    - generic [ref=e554]: Guide to MoR
+                    - generic [ref=e555]: →
+                - listitem [ref=e556]:
+                  - link "Creators' Guide →" [ref=e557] [cursor=pointer]:
+                    - /url: "#"
+                    - generic [ref=e558]: Creators' Guide
+                    - generic [ref=e559]: →
+            - listitem [ref=e561]:
+              - paragraph [ref=e562]: Compare
+              - list [ref=e563]:
+                - listitem [ref=e564]:
+                  - link "Gumroad Alternative →" [ref=e565] [cursor=pointer]:
+                    - /url: "#"
+                    - generic [ref=e566]: Gumroad Alternative
+                    - generic [ref=e567]: →
+                - listitem [ref=e568]:
+                  - link "Paddle Alternative →" [ref=e569] [cursor=pointer]:
+                    - /url: "#"
+                    - generic [ref=e570]: Paddle Alternative
+                    - generic [ref=e571]: →
+          - listitem [ref=e573]:
+            - paragraph [ref=e574]: Features
+            - list [ref=e575]:
+              - listitem [ref=e576]:
+                - link "Affiliates →" [ref=e577] [cursor=pointer]:
+                  - /url: "#"
+                  - generic [ref=e578]: Affiliates
+                  - generic [ref=e579]: →
+              - listitem [ref=e580]:
+                - link "PayPal Subscriptions →" [ref=e581] [cursor=pointer]:
+                  - /url: "#"
+                  - generic [ref=e582]: PayPal Subscriptions
+                  - generic [ref=e583]: →
+              - listitem [ref=e584]:
+                - link "Usage-based Billing →" [ref=e585] [cursor=pointer]:
+                  - /url: "#"
+                  - generic [ref=e586]: Usage-based Billing
+                  - generic [ref=e587]: →
+              - listitem [ref=e588]:
+                - link "Customer Portal →" [ref=e589] [cursor=pointer]:
+                  - /url: "#"
+                  - generic [ref=e590]: Customer Portal
+                  - generic [ref=e591]: →
+              - listitem [ref=e592]:
+                - link "Discount Codes →" [ref=e593] [cursor=pointer]:
+                  - /url: "#"
+                  - generic [ref=e594]: Discount Codes
+                  - generic [ref=e595]: →
+              - listitem [ref=e596]:
+                - link "Lead Magnets →" [ref=e597] [cursor=pointer]:
+                  - /url: "#"
+                  - generic [ref=e598]: Lead Magnets
+                  - generic [ref=e599]: →
+              - listitem [ref=e600]:
+                - link "PWYW Pricing →" [ref=e601] [cursor=pointer]:
+                  - /url: "#"
+                  - generic [ref=e602]: PWYW Pricing
+                  - generic [ref=e603]: →
+              - listitem [ref=e604]:
+                - link "Roadmap →" [ref=e605] [cursor=pointer]:
+                  - /url: "#"
+                  - generic [ref=e606]: Roadmap
+                  - generic [ref=e607]: →
+              - listitem [ref=e608]:
+                - link "Changelog →" [ref=e609] [cursor=pointer]:
+                  - /url: "#"
+                  - generic [ref=e610]: Changelog
+                  - generic [ref=e611]: →
+              - listitem [ref=e612]:
+                - link "Suggest Features →" [ref=e613] [cursor=pointer]:
+                  - /url: "#"
+                  - generic [ref=e614]: Suggest Features
+                  - generic [ref=e615]: →
+          - listitem [ref=e617]:
+            - paragraph [ref=e618]: Platform
+            - list [ref=e619]:
+              - listitem [ref=e620]:
+                - link "Merchant of Record →" [ref=e621] [cursor=pointer]:
+                  - /url: "#"
+                  - generic [ref=e622]: Merchant of Record
+                  - generic [ref=e623]: →
+              - listitem [ref=e624]:
+                - link "Subscriptions →" [ref=e625] [cursor=pointer]:
+                  - /url: "#"
+                  - generic [ref=e626]: Subscriptions
+                  - generic [ref=e627]: →
+              - listitem [ref=e628]:
+                - link "Payments →" [ref=e629] [cursor=pointer]:
+                  - /url: "#"
+                  - generic [ref=e630]: Payments
+                  - generic [ref=e631]: →
+              - listitem [ref=e632]:
+                - link "Online Storefront →" [ref=e633] [cursor=pointer]:
+                  - /url: "#"
+                  - generic [ref=e634]: Online Storefront
+                  - generic [ref=e635]: →
+              - listitem [ref=e636]:
+                - link "Digital Products →" [ref=e637] [cursor=pointer]:
+                  - /url: "#"
+                  - generic [ref=e638]: Digital Products
+                  - generic [ref=e639]: →
+              - listitem [ref=e640]:
+                - link "Checkout Overlays →" [ref=e641] [cursor=pointer]:
+                  - /url: "#"
+                  - generic [ref=e642]: Checkout Overlays
+                  - generic [ref=e643]: →
+              - listitem [ref=e644]:
+                - link "Hosted Checkouts →" [ref=e645] [cursor=pointer]:
+                  - /url: "#"
+                  - generic [ref=e646]: Hosted Checkouts
+                  - generic [ref=e647]: →
+              - listitem [ref=e648]:
+                - link "Fraud Prevention →" [ref=e649] [cursor=pointer]:
+                  - /url: "#"
+                  - generic [ref=e650]: Fraud Prevention
+                  - generic [ref=e651]: →
+              - listitem [ref=e652]:
+                - link "Customer Management →" [ref=e653] [cursor=pointer]:
+                  - /url: "#"
+                  - generic [ref=e654]: Customer Management
+                  - generic [ref=e655]: →
+          - listitem [ref=e656]:
+            - paragraph [ref=e657]: Company
+            - list [ref=e658]:
+              - listitem [ref=e659]:
+                - link "About →" [ref=e660] [cursor=pointer]:
+                  - /url: "#"
+                  - generic [ref=e661]: About
+                  - generic [ref=e662]: →
+              - listitem [ref=e663]:
+                - link "Pricing →" [ref=e664] [cursor=pointer]:
+                  - /url: "#"
+                  - generic [ref=e665]: Pricing
+                  - generic [ref=e666]: →
+              - listitem [ref=e667]:
+                - link "Case Studies →" [ref=e668] [cursor=pointer]:
+                  - /url: "#"
+                  - generic [ref=e669]: Case Studies
+                  - generic [ref=e670]: →
+              - listitem [ref=e671]:
+                - link "Wall of Love →" [ref=e672] [cursor=pointer]:
+                  - /url: "#"
+                  - generic [ref=e673]: Wall of Love
+                  - generic [ref=e674]: →
+              - listitem [ref=e675]:
+                - link "Blog →" [ref=e676] [cursor=pointer]:
+                  - /url: "#"
+                  - generic [ref=e677]: Blog
+                  - generic [ref=e678]: →
+              - listitem [ref=e679]:
+                - link "Brand Assets →" [ref=e680] [cursor=pointer]:
+                  - /url: "#"
+                  - generic [ref=e681]: Brand Assets
+                  - generic [ref=e682]: →
+              - listitem [ref=e683]:
+                - link "Migration Offer →" [ref=e684] [cursor=pointer]:
+                  - /url: "#"
+                  - generic [ref=e685]: Migration Offer
+                  - generic [ref=e686]: →
+              - listitem [ref=e687]:
+                - link "@lmsqueezy →" [ref=e688] [cursor=pointer]:
+                  - /url: https://twitter.com/lmsqueezy
+                  - generic [ref=e689]: "@lmsqueezy"
+                  - generic [ref=e690]: →
+      - generic [ref=e691]:
+        - generic [ref=e692]: © 2026 Lemon Squeezy, LLC
+        - generic [ref=e693]: •
+        - generic [ref=e694]:
+          - generic [ref=e695]:
+            - link "Privacy" [ref=e696] [cursor=pointer]:
+              - /url: "#"
+            - generic [ref=e697]: •
+          - generic [ref=e698]:
+            - link "Terms" [ref=e699] [cursor=pointer]:
+              - /url: "#"
+            - generic [ref=e700]: •
+          - link "DPA" [ref=e702] [cursor=pointer]:
+            - /url: "#"
+  - alert [ref=e704]

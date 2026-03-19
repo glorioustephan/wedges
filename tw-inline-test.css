@@ -1,0 +1,4 @@
+@import "tailwindcss";
+@source "./tw-inline-test.html";
+:root { --acme-canvas-color: red; }
+@theme inline { --color-canvas: var(--acme-canvas-color); }
