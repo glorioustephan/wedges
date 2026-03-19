@@ -18,7 +18,7 @@
     "responsive",
     "tailwindcss"
   ],
-  "homepage": "https://lemonsqueezy.com/wedges",
+  "homepage": "#",
   "bugs": {
     "url": "https://github.com/lmsqueezy/wedges/issues"
   },
@@ -31,7 +31,7 @@
   "author": {
     "name": "Lemon Squeezy",
     "email": "hello@lemonsqueezy.com",
-    "url": "https://lemonsqueezy.com/wedges"
+    "url": "#"
   },
   "sideEffects": false,
   "type": "module",

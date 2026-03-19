@@ -13,7 +13,6 @@ import Fathom from "@/components/Fathom";
 import { Header } from "@/components/header/header";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://lemonsqueezy.com/"),
   title: "Wedges Docs",
   description: siteConfig.siteDescription,
 };

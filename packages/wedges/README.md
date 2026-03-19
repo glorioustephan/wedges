@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://lemonsqueezy.com/wedges">
+  <a href="#">
       <img width="100%" src="https://github.com/lmsqueezy/wedges/blob/c47d43f8c76271381e812a357628fe3d3b076f25/apps/docs/public/images/banner.webp" alt="Wedges UI library" />
   </a>
 </p>
@@ -13,7 +13,7 @@ Wedges is an ever-expanding, open-source React UI library built with the Wedges 
 
 With Wedges, you get a range of pre-built, customizable components that are easy to use and integrate into your React projects. It also comes with full TypeScript support, ensuring type safety and developer-friendly experience.
 
-<a href="https://lemonsqueezy.com/wedges/docs"><strong>Get Started with Wedges &rarr;</strong></a>
+<a href="#"><strong>Get Started with Wedges &rarr;</strong></a>
 
 ## License
 
@@ -21,7 +21,7 @@ Wedges is licensed under the [MIT License](./LICENSE).
 
 ## Getting Started
 
-Visit <a href="https://www.lemonsqueezy.com/wedges/docs" target="_blank">Wedges Docs</a> to get started.
+Visit <a href="#" target="_blank">Wedges Docs</a> to get started.
 
 ## Repository Structure
 

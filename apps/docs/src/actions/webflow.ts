@@ -84,7 +84,7 @@ export async function getWebflowData() {
         title: blogPostData?.fieldData.name ?? "",
         image: blogPostData?.fieldData["main-image"].url ?? "",
 
-        url: `https://www.lemonsqueezy.com/blog/${blogPostData?.fieldData.slug ?? ""}`,
+        url: "#",
       },
       caseStudy: {
         id: caseStudyData?.id ?? "",
@@ -92,7 +92,7 @@ export async function getWebflowData() {
         isDraft: caseStudyData?.isDraft ?? true,
         title: caseStudyData?.fieldData.name ?? "",
         image: caseStudyData?.fieldData["case-study-image"].url ?? "",
-        url: `https://www.lemonsqueezy.com/case-study/${caseStudyData?.fieldData.slug ?? ""}`,
+        url: "#",
       },
     } satisfies WebflowData;
   } catch (error) {

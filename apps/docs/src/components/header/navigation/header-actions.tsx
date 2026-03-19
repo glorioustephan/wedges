@@ -10,7 +10,7 @@ export function HeaderActions() {
       <ul className="flex items-center gap-6">
         <li>
           <a
-            href="https://app.lemonsqueezy.com/login"
+            href="#"
             className={cn(
               focusClasses,
               "shrink-0 text-nowrap text-white/60 outline-white duration-100 hover:text-white"

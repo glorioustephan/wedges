@@ -10,32 +10,32 @@ export const mainNav: MainNav = [
           {
             label: "Subscriptions",
             description: "Maximize your revenue with subscriptions",
-            href: "https://www.lemonsqueezy.com/ecommerce/subscriptions",
+            href: "#",
           },
           {
             label: "Payments",
             description: "Payments and billing made easy-peasy",
-            href: "https://www.lemonsqueezy.com/ecommerce/payments",
+            href: "#",
           },
           {
             label: "Online Stores",
             description: "Your own online storefront in minutes",
-            href: "https://www.lemonsqueezy.com/ecommerce/online-stores",
+            href: "#",
           },
           {
             label: "Digital Products",
             description: "Sell digital products any way you want",
-            href: "https://www.lemonsqueezy.com/ecommerce/digital-products",
+            href: "#",
           },
           {
             label: "Checkout Overlay",
             description: "Add a native checkout flow",
-            href: "https://www.lemonsqueezy.com/ecommerce/checkout-overlays",
+            href: "#",
           },
           {
             label: "Hosted Checkouts",
             description: "Increase conversions with hosted checkouts",
-            href: "https://www.lemonsqueezy.com/ecommerce/hosted-checkouts",
+            href: "#",
           },
         ],
       },
@@ -45,34 +45,34 @@ export const mainNav: MainNav = [
           {
             label: "Affiliates",
             description: "Empower your superfans with affiliate tools",
-            href: "https://www.lemonsqueezy.com/marketing/affiliates",
+            href: "#",
           },
           {
             label: "Usage-based Billing",
             description: "Track usage and bill based on consumption",
-            href: "https://www.lemonsqueezy.com/features/usage-based-billing",
+            href: "#",
             tag: "new",
           },
           {
             label: "Customer Portal",
             description: "A self-service customer portal for your store",
-            href: "https://www.lemonsqueezy.com/features/usage-based-billing",
+            href: "#",
             tag: "new",
           },
           {
             label: "Discount Codes",
             description: "Coupons & discounts for a feel-good checkout",
-            href: "https://www.lemonsqueezy.com/marketing/discount-codes",
+            href: "#",
           },
           {
             label: "Lead Magnets",
             description: "Distribute free products that build interest",
-            href: "https://www.lemonsqueezy.com/marketing/lead-magnets",
+            href: "#",
           },
           {
             label: "Pay What You Want",
             description: "Let customers choose the price they pay",
-            href: "https://www.lemonsqueezy.com/marketing/pay-what-you-want",
+            href: "#",
           },
         ],
       },
@@ -82,29 +82,29 @@ export const mainNav: MainNav = [
           {
             label: "Merchant of Record",
             description: "Global sales tax & compliance handled for you",
-            href: "https://www.lemonsqueezy.com/reporting/merchant-of-record",
+            href: "#",
           },
           {
             label: "Fraud Prevention",
             description: "Your always-on shield from financial fraud",
-            href: "https://www.lemonsqueezy.com/reporting/fraud-prevention",
+            href: "#",
           },
           {
             label: "Customer Management",
             description: "Build enduring customer partnerships",
-            href: "https://www.lemonsqueezy.com/reporting/customer-management",
+            href: "#",
           },
           {
             label: "Changelog",
             description: "Freshly squeezed platform updates",
-            href: "https://www.lemonsqueezy.com/changelog",
+            href: "#",
             tag: "updates",
             separator: true,
           },
           {
             label: "Roadmap",
             description: "Learn what features are on the horizon",
-            href: "https://www.lemonsqueezy.com/roadmap",
+            href: "#",
           },
         ],
       },
@@ -119,42 +119,42 @@ export const mainNav: MainNav = [
           {
             label: "Help Center",
             description: "Need help or have a question?",
-            href: "https://www.lemonsqueezy.com/help",
+            href: "#",
           },
           {
             label: "Help Docs",
             description: "Detailed help docs and knowledge base",
-            href: "https://docs.lemonsqueezy.com/help",
+            href: "#",
           },
           {
             label: "Developer Docs",
             description: "Browse our extensive developer docs",
-            href: "https://docs.lemonsqueezy.com/api",
+            href: "#",
           },
           {
             label: "Suggest a Feature",
             description: "Vote on new ideas or suggest your own",
-            href: "https://docs.lemonsqueezy.com/api",
+            href: "#",
           },
         ],
       },
       {
         label: "Case Studies",
         buttonLabel: "All studies",
-        buttonHref: "https://www.lemonsqueezy.com/case-studies",
+        buttonHref: "#",
         isCaseStudy: true,
       },
       {
         label: "Blog",
         buttonLabel: "All articles",
-        buttonHref: "https://www.lemonsqueezy.com/blog",
+        buttonHref: "#",
         isBlog: true,
       },
     ],
   },
-  { label: "Pricing", href: "https://www.lemonsqueezy.com/pricing" },
+  { label: "Pricing", href: "#" },
   { label: "Wedges", href: "/" },
-  { label: "Help", href: "https://www.lemonsqueezy.com/help" },
+  { label: "Help", href: "#" },
 ];
 
 export const secondaryNav: SecondaryNav = [
@@ -180,23 +180,23 @@ export const footerNav: FooterNav = [
         children: [
           {
             label: "Help Center",
-            href: "https://www.lemonsqueezy.com/help",
+            href: "#",
           },
           {
             label: "Help Docs",
-            href: "https://docs.lemonsqueezy.com/help",
+            href: "#",
           },
           {
             label: "Developer Docs",
-            href: "https://docs.lemonsqueezy.com/api",
+            href: "#",
           },
           {
             label: "Guide to MoR",
-            href: "https://www.lemonsqueezy.com/guide-to-merchant-of-record",
+            href: "#",
           },
           {
             label: "Creators' Guide",
-            href: "https://www.lemonsqueezy.com/creators-guide",
+            href: "#",
           },
         ],
       },
@@ -209,11 +209,11 @@ export const footerNav: FooterNav = [
             children: [
               {
                 label: "Gumroad Alternative",
-                href: "https://www.lemonsqueezy.com/gumroad-alternative",
+                href: "#",
               },
               {
                 label: "Paddle Alternative",
-                href: "https://www.lemonsqueezy.com/paddle-alternative",
+                href: "#",
               },
             ],
           },
@@ -230,43 +230,43 @@ export const footerNav: FooterNav = [
         children: [
           {
             label: "Affiliates",
-            href: "https://www.lemonsqueezy.com/marketing/affiliates",
+            href: "#",
           },
           {
             label: "PayPal Subscriptions",
-            href: "https://www.lemonsqueezy.com/features/paypal-subscriptions",
+            href: "#",
           },
           {
             label: "Usage-based Billing",
-            href: "https://www.lemonsqueezy.com/features/usage-based-billing",
+            href: "#",
           },
           {
             label: "Customer Portal",
-            href: "https://www.lemonsqueezy.com/features/customer-portal",
+            href: "#",
           },
           {
             label: "Discount Codes",
-            href: "https://www.lemonsqueezy.com/marketing/discount-codes",
+            href: "#",
           },
           {
             label: "Lead Magnets",
-            href: "https://www.lemonsqueezy.com/marketing/lead-magnets",
+            href: "#",
           },
           {
             label: "PWYW Pricing",
-            href: "https://www.lemonsqueezy.com/marketing/pay-what-you-want",
+            href: "#",
           },
           {
             label: "Roadmap",
-            href: "https://www.lemonsqueezy.com/roadmap",
+            href: "#",
           },
           {
             label: "Changelog",
-            href: "https://www.lemonsqueezy.com/changelog",
+            href: "#",
           },
           {
             label: "Suggest Features",
-            href: "https://www.lemonsqueezy.com/suggest-feature",
+            href: "#",
           },
         ],
       },
@@ -281,39 +281,39 @@ export const footerNav: FooterNav = [
         children: [
           {
             label: "Merchant of Record",
-            href: "https://www.lemonsqueezy.com/reporting/merchant-of-record",
+            href: "#",
           },
           {
             label: "Subscriptions",
-            href: "https://www.lemonsqueezy.com/ecommerce/subscriptions",
+            href: "#",
           },
           {
             label: "Payments",
-            href: "https://www.lemonsqueezy.com/ecommerce/payments",
+            href: "#",
           },
           {
             label: "Online Storefront",
-            href: "https://www.lemonsqueezy.com/ecommerce/online-stores",
+            href: "#",
           },
           {
             label: "Digital Products",
-            href: "https://www.lemonsqueezy.com/ecommerce/digital-products",
+            href: "#",
           },
           {
             label: "Checkout Overlays",
-            href: "https://www.lemonsqueezy.com/ecommerce/checkout-overlays",
+            href: "#",
           },
           {
             label: "Hosted Checkouts",
-            href: "https://www.lemonsqueezy.com/ecommerce/hosted-checkouts",
+            href: "#",
           },
           {
             label: "Fraud Prevention",
-            href: "https://www.lemonsqueezy.com/reporting/fraud-prevention",
+            href: "#",
           },
           {
             label: "Customer Management",
-            href: "https://www.lemonsqueezy.com/reporting/customer-management",
+            href: "#",
           },
         ],
       },
@@ -326,31 +326,31 @@ export const footerNav: FooterNav = [
     children: [
       {
         label: "About",
-        href: "https://www.lemonsqueezy.com/about",
+        href: "#",
       },
       {
         label: "Pricing",
-        href: "https://www.lemonsqueezy.com/pricing",
+        href: "#",
       },
       {
         label: "Case Studies",
-        href: "https://www.lemonsqueezy.com/case-studies",
+        href: "#",
       },
       {
         label: "Wall of Love",
-        href: "https://www.lemonsqueezy.com/wall-of-love",
+        href: "#",
       },
       {
         label: "Blog",
-        href: "https://www.lemonsqueezy.com/blog",
+        href: "#",
       },
       {
         label: "Brand Assets",
-        href: "https://www.lemonsqueezy.com/brand",
+        href: "#",
       },
       {
         label: "Migration Offer",
-        href: "https://www.lemonsqueezy.com/migration-offer",
+        href: "#",
       },
       {
         label: "@lmsqueezy",
@@ -361,7 +361,7 @@ export const footerNav: FooterNav = [
 ];
 
 export const copyrightNav: FooterNav = [
-  { label: "Privacy", href: "https://www.lemonsqueezy.com/privacy" },
-  { label: "Terms", href: "https://www.lemonsqueezy.com/terms" },
-  { label: "DPA", href: "https://www.lemonsqueezy.com/dpa" },
+  { label: "Privacy", href: "#" },
+  { label: "Terms", href: "#" },
+  { label: "DPA", href: "#" },
 ];
