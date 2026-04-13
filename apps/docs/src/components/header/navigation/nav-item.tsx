@@ -1,6 +1,12 @@
 "use client";
 
-import { forwardRef, type ComponentPropsWithoutRef, type ElementRef } from "react";
+import {
+  forwardRef,
+  type ComponentPropsWithoutRef,
+  type ElementRef,
+  type ForwardRefExoticComponent,
+  type RefAttributes,
+} from "react";
 import { usePathname } from "next/navigation";
 import { ChevronDownIcon } from "@iconicicons/react";
 
@@ -12,13 +18,14 @@ import { cn } from "@/lib/utils";
 import { Navigation } from "./navigation";
 import { PrimarySubItem } from "./primary-sub-item";
 
-const NavigationItem = forwardRef<
-  ElementRef<typeof Navigation.Item>,
-  ComponentPropsWithoutRef<typeof Navigation.Item> & {
-    item: NavItem;
-    webflowData?: WebflowData;
-  }
->((props, ref) => {
+type NavigationItemProps = ComponentPropsWithoutRef<typeof Navigation.Item> & {
+  item: NavItem;
+  webflowData?: WebflowData;
+};
+
+const NavigationItem: ForwardRefExoticComponent<
+  NavigationItemProps & RefAttributes<ElementRef<typeof Navigation.Item>>
+> = forwardRef<ElementRef<typeof Navigation.Item>, NavigationItemProps>((props, ref) => {
   const { item, className, webflowData, ...otherProps } = props;
   const pathname = usePathname();
   const isActive = pathname === item.href || item.href === "/";

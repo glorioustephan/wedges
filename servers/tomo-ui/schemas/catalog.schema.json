@@ -1,0 +1,272 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://wedges.local/tomo-ui/catalog.schema.json",
+  "title": "Tomo UI Catalog",
+  "type": "object",
+  "required": ["components", "tokens", "patterns", "categories", "manifest"],
+  "properties": {
+    "manifest": {
+      "$ref": "#/$defs/manifest"
+    },
+    "components": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/component"
+      }
+    },
+    "tokens": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/token"
+      }
+    },
+    "patterns": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/pattern"
+      }
+    },
+    "categories": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/category"
+      }
+    }
+  },
+  "$defs": {
+    "manifest": {
+      "type": "object",
+      "required": ["version", "generated_at", "source_roots", "counts"],
+      "properties": {
+        "version": { "type": "string" },
+        "generated_at": { "type": "string" },
+        "source_roots": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "counts": {
+          "type": "object",
+          "required": ["components", "tokens", "patterns", "categories"],
+          "properties": {
+            "components": { "type": "integer", "minimum": 0 },
+            "tokens": { "type": "integer", "minimum": 0 },
+            "patterns": { "type": "integer", "minimum": 0 },
+            "categories": { "type": "integer", "minimum": 0 }
+          }
+        }
+      }
+    },
+    "category": {
+      "type": "object",
+      "required": ["entry_type", "category_id", "name", "display_name", "description", "tags"],
+      "properties": {
+        "entry_type": { "const": "category" },
+        "category_id": { "type": "string" },
+        "name": { "type": "string" },
+        "display_name": { "type": "string" },
+        "description": { "type": "string" },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "component": {
+      "type": "object",
+      "required": [
+        "entry_type",
+        "component_id",
+        "name",
+        "display_name",
+        "framework",
+        "status",
+        "category_ids",
+        "pattern_ids",
+        "tags",
+        "intent_labels",
+        "source_path",
+        "description",
+        "summary",
+        "slots",
+        "props",
+        "variants",
+        "accessibility",
+        "dependencies",
+        "utility_classes",
+        "style_hooks",
+        "subcomponents",
+        "examples",
+        "token_ids",
+        "search_text",
+        "family"
+      ],
+      "properties": {
+        "entry_type": { "const": "component" },
+        "component_id": { "type": "string" },
+        "name": { "type": "string" },
+        "display_name": { "type": "string" },
+        "framework": { "type": "string" },
+        "status": { "type": "string" },
+        "category_ids": { "type": "array", "items": { "type": "string" } },
+        "pattern_ids": { "type": "array", "items": { "type": "string" } },
+        "tags": { "type": "array", "items": { "type": "string" } },
+        "intent_labels": { "type": "array", "items": { "type": "string" } },
+        "source_path": { "type": "string" },
+        "description": { "type": "string" },
+        "summary": { "type": "string" },
+        "slots": { "type": "array", "items": { "type": "string" } },
+        "props": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/prop" }
+        },
+        "variants": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/variant" }
+        },
+        "accessibility": { "$ref": "#/$defs/accessibility" },
+        "dependencies": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/dependency" }
+        },
+        "utility_classes": { "type": "array", "items": { "type": "string" } },
+        "style_hooks": { "type": "array", "items": { "type": "string" } },
+        "subcomponents": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/subcomponent" }
+        },
+        "examples": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/example" }
+        },
+        "token_ids": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "search_text": { "type": "string" },
+        "family": { "type": "string" }
+      }
+    },
+    "token": {
+      "type": "object",
+      "required": [
+        "entry_type",
+        "token_id",
+        "name",
+        "display_name",
+        "kind",
+        "raw_value",
+        "semantic_aliases",
+        "tags",
+        "source_path",
+        "description",
+        "modes",
+        "search_text"
+      ],
+      "properties": {
+        "entry_type": { "const": "token" },
+        "token_id": { "type": "string" },
+        "name": { "type": "string" },
+        "display_name": { "type": "string" },
+        "kind": { "type": "string" },
+        "raw_value": { "type": "string" },
+        "semantic_aliases": { "type": "array", "items": { "type": "string" } },
+        "tags": { "type": "array", "items": { "type": "string" } },
+        "source_path": { "type": "string" },
+        "description": { "type": "string" },
+        "modes": { "type": "array", "items": { "type": "string" } },
+        "search_text": { "type": "string" }
+      }
+    },
+    "pattern": {
+      "type": "object",
+      "required": [
+        "entry_type",
+        "pattern_id",
+        "name",
+        "display_name",
+        "description",
+        "category_id",
+        "tags",
+        "component_ids",
+        "search_text"
+      ],
+      "properties": {
+        "entry_type": { "const": "pattern" },
+        "pattern_id": { "type": "string" },
+        "name": { "type": "string" },
+        "display_name": { "type": "string" },
+        "description": { "type": "string" },
+        "category_id": { "type": "string" },
+        "tags": { "type": "array", "items": { "type": "string" } },
+        "component_ids": { "type": "array", "items": { "type": "string" } },
+        "search_text": { "type": "string" }
+      }
+    },
+    "prop": {
+      "type": "object",
+      "required": ["name", "type", "required", "source"],
+      "properties": {
+        "name": { "type": "string" },
+        "type": { "type": "string" },
+        "required": { "type": "boolean" },
+        "default_value": { "type": "string" },
+        "description": { "type": "string" },
+        "source": { "type": "string" }
+      }
+    },
+    "variant": {
+      "type": "object",
+      "required": ["name", "values", "source"],
+      "properties": {
+        "name": { "type": "string" },
+        "values": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "source": { "type": "string" }
+      }
+    },
+    "accessibility": {
+      "type": "object",
+      "required": ["roles", "labels", "keyboard_support"],
+      "properties": {
+        "roles": { "type": "array", "items": { "type": "string" } },
+        "labels": { "type": "array", "items": { "type": "string" } },
+        "keyboard_support": { "type": "array", "items": { "type": "string" } },
+        "notes": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "dependency": {
+      "type": "object",
+      "required": ["name", "kind", "imported_symbols"],
+      "properties": {
+        "name": { "type": "string" },
+        "kind": { "type": "string" },
+        "imported_symbols": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "example": {
+      "type": "object",
+      "required": ["id", "title", "file_path", "code", "source"],
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "file_path": { "type": "string" },
+        "code": { "type": "string" },
+        "source": { "type": "string" }
+      }
+    },
+    "subcomponent": {
+      "type": "object",
+      "required": ["name", "local_name", "props"],
+      "properties": {
+        "name": { "type": "string" },
+        "local_name": { "type": "string" },
+        "props": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/prop" }
+        }
+      }
+    }
+  }
+}

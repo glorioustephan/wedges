@@ -19,17 +19,18 @@ type NoSortProps = {
   content: [ContentItem, ContentItem, ContentItem][];
 };
 
-export const PropsTable = React.forwardRef<
-  HTMLTableElement,
-  React.HTMLAttributes<HTMLTableElement> & {
-    content: [ContentItem, ContentItem, ContentItem][];
-    isData?: boolean;
-    isOptions?: boolean;
-    isUtility?: boolean;
-    sort?: boolean;
-    includeCommonDocs?: LabelDocsParams;
-  } & (SortProps | NoSortProps)
->(
+type PropsTableProps = React.HTMLAttributes<HTMLTableElement> & {
+  content: [ContentItem, ContentItem, ContentItem][];
+  isData?: boolean;
+  isOptions?: boolean;
+  isUtility?: boolean;
+  sort?: boolean;
+  includeCommonDocs?: LabelDocsParams;
+} & (SortProps | NoSortProps);
+
+export const PropsTable: React.ForwardRefExoticComponent<
+  PropsTableProps & React.RefAttributes<HTMLTableElement>
+> = React.forwardRef<HTMLTableElement, PropsTableProps>(
   (
     {
       content = [],

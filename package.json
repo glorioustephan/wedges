@@ -3,15 +3,16 @@
   "name": "wedges-monorepo",
   "workspaces": [
     "apps/*",
-    "packages/*"
+    "packages/*",
+    "servers/*"
   ],
   "type": "module",
   "scripts": {
     "build": "turbo run build",
     "clean": "turbo clean && rimraf node_modules ./pnpm-lock.yaml ./.turbo ./coverage",
     "dev": "turbo run dev --parallel",
-    "format": "prettier --check ./packages/**/src ./apps/** --cache",
-    "format:fix": "prettier --write ./packages/**/src ./apps/** --cache",
+    "format": "prettier --check ./packages/**/src ./apps/** ./servers/** --cache",
+    "format:fix": "prettier --write ./packages/**/src ./apps/** ./servers/** --cache",
     "lint": "turbo run lint",
     "lint:fix": "turbo run lint:fix",
     "test": "NODE_OPTIONS='--experimental-vm-modules' jest --passWithNoTests --coverage --coverageReporters=\"text-summary\"",

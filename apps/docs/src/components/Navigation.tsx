@@ -5,7 +5,9 @@ import {
   isValidElement,
   type AnchorHTMLAttributes,
   type ComponentPropsWithoutRef,
+  type ForwardRefExoticComponent,
   type HTMLAttributes,
+  type RefAttributes,
   type SVGAttributes,
 } from "react";
 import Image from "next/image";
@@ -19,8 +21,9 @@ import { cn } from "@/lib/utils";
 /* -------------------------------------------------------------------------- */
 /*                               Navigation Root                              */
 /* -------------------------------------------------------------------------- */
-const NavRoot = forwardRef<HTMLElement, HTMLAttributes<HTMLElement>>(
-  ({ className, ...otherProps }, ref) => {
+const NavRoot: ForwardRefExoticComponent<
+  HTMLAttributes<HTMLElement> & RefAttributes<HTMLElement>
+> = forwardRef<HTMLElement, HTMLAttributes<HTMLElement>>(({ className, ...otherProps }, ref) => {
     return (
       <nav
         ref={ref}
@@ -28,19 +31,18 @@ const NavRoot = forwardRef<HTMLElement, HTMLAttributes<HTMLElement>>(
         {...otherProps}
       />
     );
-  }
-);
+  });
 
 /* -------------------------------------------------------------------------- */
 /*                               Navigation Item                              */
 /* -------------------------------------------------------------------------- */
-const NavItem = forwardRef<
-  HTMLAnchorElement,
-  AnchorHTMLAttributes<HTMLAnchorElement> & {
-    asChild?: boolean;
-    active?: boolean;
-  }
->((props, ref) => {
+type NavItemProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
+  asChild?: boolean;
+  active?: boolean;
+};
+
+const NavItem: ForwardRefExoticComponent<NavItemProps & RefAttributes<HTMLAnchorElement>> =
+  forwardRef<HTMLAnchorElement, NavItemProps>((props, ref) => {
   const { active, children, onMouseEnter, className, asChild, ...otherProps } = props;
   const useAsChild = asChild && isValidElement(children);
   const Component = useAsChild ? Slot : "a";
@@ -62,17 +64,18 @@ const NavItem = forwardRef<
       {children}
     </Component>
   );
-});
+  });
 
 /* -------------------------------------------------------------------------- */
 /*                             Navigation Dropdown                            */
 /* -------------------------------------------------------------------------- */
-const NavDropdown = forwardRef<
-  HTMLDivElement,
-  HTMLAttributes<HTMLDivElement> & {
-    show?: boolean;
-  }
->(({ className, show, ...otherProps }, ref) => {
+type NavDropdownProps = HTMLAttributes<HTMLDivElement> & {
+  show?: boolean;
+};
+
+const NavDropdown: ForwardRefExoticComponent<
+  NavDropdownProps & RefAttributes<HTMLDivElement>
+> = forwardRef<HTMLDivElement, NavDropdownProps>(({ className, show, ...otherProps }, ref) => {
   return (
     <Transition
       as="div"
@@ -97,8 +100,9 @@ const NavDropdown = forwardRef<
   );
 });
 
-const NavDropdownColumn = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...otherProps }, ref) => {
+const NavDropdownColumn: ForwardRefExoticComponent<
+  HTMLAttributes<HTMLDivElement> & RefAttributes<HTMLDivElement>
+> = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(({ className, ...otherProps }, ref) => {
     return (
       <div
         ref={ref}
@@ -110,18 +114,19 @@ const NavDropdownColumn = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivEleme
         {...otherProps}
       />
     );
-  }
-);
+  });
 
 /* ------------------------------ Dropdown Link ----------------------------- */
-const NavDropdownLink = forwardRef<
-  HTMLAnchorElement,
-  ComponentPropsWithoutRef<typeof Link> & {
-    label: string;
-    description?: string;
-    badge?: "new" | "updates";
-  }
->(({ className, badge, label, description, ...otherProps }, ref) => {
+type NavDropdownLinkProps = ComponentPropsWithoutRef<typeof Link> & {
+  label: string;
+  description?: string;
+  badge?: "new" | "updates";
+};
+
+const NavDropdownLink: ForwardRefExoticComponent<
+  NavDropdownLinkProps & RefAttributes<HTMLAnchorElement>
+> = forwardRef<HTMLAnchorElement, NavDropdownLinkProps>(
+  ({ className, badge, label, description, ...otherProps }, ref) => {
   const newBadge = (
     <span
       className="ml-2 rounded-full bg-orange-200 px-3 text-sm leading-6 text-[#8a6100]"
@@ -159,17 +164,19 @@ const NavDropdownLink = forwardRef<
       </span>
     </Link>
   );
-});
+  }
+);
 
 /* --------------------------- Dropdown Blog Link --------------------------- */
-const NavDropdownBlogLink = forwardRef<
-  HTMLAnchorElement,
-  ComponentPropsWithoutRef<typeof Link> & {
-    label: string;
-    description?: string;
-    imgSrc: string;
-  }
->(({ className, label, imgSrc, ...otherProps }, ref) => {
+type NavDropdownBlogLinkProps = ComponentPropsWithoutRef<typeof Link> & {
+  label: string;
+  description?: string;
+  imgSrc: string;
+};
+
+const NavDropdownBlogLink: ForwardRefExoticComponent<
+  NavDropdownBlogLinkProps & RefAttributes<HTMLAnchorElement>
+> = forwardRef<HTMLAnchorElement, NavDropdownBlogLinkProps>(({ className, label, imgSrc, ...otherProps }, ref) => {
   return (
     <Link
       ref={ref}
@@ -205,7 +212,9 @@ type WithButtonProps = HTMLAttributes<HTMLDivElement> & {
 
 type NavDropdownTitleProps = WithoutButtonProps | WithButtonProps;
 
-const NavDropdownTitle = forwardRef<HTMLDivElement, NavDropdownTitleProps>(
+const NavDropdownTitle: ForwardRefExoticComponent<
+  NavDropdownTitleProps & RefAttributes<HTMLDivElement>
+> = forwardRef<HTMLDivElement, NavDropdownTitleProps>(
   ({ label, buttonHref, buttonLabel, ...otherProps }, ref) => {
     return (
       <div
@@ -228,8 +237,7 @@ const NavDropdownTitle = forwardRef<HTMLDivElement, NavDropdownTitleProps>(
         )}
       </div>
     );
-  }
-);
+  });
 
 NavRoot.displayName = "NavRoot";
 NavItem.displayName = "NavItem";
@@ -239,7 +247,16 @@ NavDropdownLink.displayName = "NavDropdownLink";
 NavDropdownTitle.displayName = "NavDropdownTitle";
 NavDropdownBlogLink.displayName = "NavDropdownBlogLink";
 
-export const Navigation = Object.assign(NavRoot, {
+type NavigationComponent = typeof NavRoot & {
+  Item: typeof NavItem;
+  Dropdown: typeof NavDropdown;
+  DropdownColumn: typeof NavDropdownColumn;
+  DropdownLink: typeof NavDropdownLink;
+  DropdownBlogLink: typeof NavDropdownBlogLink;
+  DropdownTitle: typeof NavDropdownTitle;
+};
+
+export const Navigation: NavigationComponent = Object.assign(NavRoot, {
   Item: NavItem,
   Dropdown: NavDropdown,
   DropdownColumn: NavDropdownColumn,

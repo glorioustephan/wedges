@@ -10,6 +10,29 @@
       ],
       "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
     },
+    "parse-catalog": {
+      "dependsOn": [],
+      "outputs": [
+        "catalog/components.json",
+        "catalog/tokens.json",
+        "catalog/patterns.json",
+        "catalog/categories.json",
+        "catalog/manifest.json",
+        "catalog/catalog.schema.json"
+      ]
+    },
+    "build-db": {
+      "dependsOn": ["parse-catalog"],
+      "outputs": ["catalog/tomo-ui.sqlite", "catalog/build-report.json"]
+    },
+    "rebuild": {
+      "dependsOn": ["parse-catalog", "build-db"],
+      "outputs": ["catalog/**"]
+    },
+    "benchmark": {
+      "dependsOn": ["build-db"],
+      "outputs": ["benchmarks/results.json"]
+    },
     "test": {
       "outputs": ["coverage/**"],
       "dependsOn": []

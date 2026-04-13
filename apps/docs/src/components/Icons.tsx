@@ -1,6 +1,15 @@
-import { forwardRef, type SVGProps } from "react";
+import {
+  forwardRef,
+  type ForwardRefExoticComponent,
+  type RefAttributes,
+  type SVGProps,
+} from "react";
 
-export const StackBlitzIcon = forwardRef<SVGSVGElement, SVGProps<SVGSVGElement>>((props, ref) => {
+type SvgIconComponent = ForwardRefExoticComponent<
+  SVGProps<SVGSVGElement> & RefAttributes<SVGSVGElement>
+>;
+
+export const StackBlitzIcon: SvgIconComponent = forwardRef<SVGSVGElement, SVGProps<SVGSVGElement>>((props, ref) => {
   return (
     <svg ref={ref} fill="none" height="24" viewBox="0 0 24 24" width="24" {...props}>
       <path
@@ -11,7 +20,7 @@ export const StackBlitzIcon = forwardRef<SVGSVGElement, SVGProps<SVGSVGElement>>
   );
 });
 
-export const RadixIcon = forwardRef<SVGSVGElement, SVGProps<SVGSVGElement>>((props, ref) => {
+export const RadixIcon: SvgIconComponent = forwardRef<SVGSVGElement, SVGProps<SVGSVGElement>>((props, ref) => {
   return (
     <svg ref={ref} fill="none" height="24" viewBox="0 0 24 24" width="24" {...props}>
       <path
@@ -27,7 +36,7 @@ export const RadixIcon = forwardRef<SVGSVGElement, SVGProps<SVGSVGElement>>((pro
   );
 });
 
-export const GithubIcon = forwardRef<SVGSVGElement, SVGProps<SVGSVGElement>>((props, ref) => {
+export const GithubIcon: SvgIconComponent = forwardRef<SVGSVGElement, SVGProps<SVGSVGElement>>((props, ref) => {
   return (
     <svg ref={ref} fill="none" height="24" viewBox="0 0 24 24" width="24" {...props}>
       <path

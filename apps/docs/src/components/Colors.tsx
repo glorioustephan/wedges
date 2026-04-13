@@ -1,13 +1,19 @@
-import { forwardRef, type HTMLAttributes } from "react";
+import {
+  forwardRef,
+  type ForwardRefExoticComponent,
+  type HTMLAttributes,
+  type RefAttributes,
+} from "react";
 
 import { cn } from "@/lib/utils";
 
-const ColorsWedges = forwardRef<
-  HTMLDivElement,
-  HTMLAttributes<HTMLElement> & {
-    title: string;
-  }
->(({ className, children, title, ...otherProps }, ref) => {
+type ColorsWedgesProps = HTMLAttributes<HTMLElement> & {
+  title: string;
+};
+
+const ColorsWedges: ForwardRefExoticComponent<
+  ColorsWedgesProps & RefAttributes<HTMLDivElement>
+> = forwardRef<HTMLDivElement, ColorsWedgesProps>(({ className, children, title, ...otherProps }, ref) => {
   return (
     <div className="my-8">
       {title ? (
@@ -25,13 +31,13 @@ const ColorsWedges = forwardRef<
   );
 });
 
-const Color = forwardRef<
-  HTMLDivElement,
-  HTMLAttributes<HTMLElement> & {
-    title: string;
-    hex: string;
-  }
->(({ className, title, hex, ...otherProps }, ref) => {
+type ColorProps = HTMLAttributes<HTMLElement> & {
+  title: string;
+  hex: string;
+};
+
+const Color: ForwardRefExoticComponent<ColorProps & RefAttributes<HTMLDivElement>> =
+  forwardRef<HTMLDivElement, ColorProps>(({ className, title, hex, ...otherProps }, ref) => {
   return (
     <div className="group flex w-full flex-col">
       <div
@@ -44,15 +50,11 @@ const Color = forwardRef<
       <span className="hidden pl-1 font-mono text-[9px] text-surface-400 md:block">{hex}</span>
     </div>
   );
-});
+  });
 
-const ColorThemable = forwardRef<
-  HTMLDivElement,
-  HTMLAttributes<HTMLElement> & {
-    title: string;
-    hex: string;
-  }
->(({ className, title, hex, ...otherProps }, ref) => {
+const ColorThemable: ForwardRefExoticComponent<
+  ColorProps & RefAttributes<HTMLDivElement>
+> = forwardRef<HTMLDivElement, ColorProps>(({ className, title, hex, ...otherProps }, ref) => {
   return (
     <div className="group flex w-full flex-col">
       <div
@@ -71,4 +73,9 @@ Color.displayName = "Color";
 ColorsWedges.displayName = "Colors";
 ColorThemable.displayName = "ColorThemable";
 
-export const Colors = Object.assign(ColorsWedges, { Color, ColorThemable });
+type ColorsComponent = typeof ColorsWedges & {
+  Color: typeof Color;
+  ColorThemable: typeof ColorThemable;
+};
+
+export const Colors: ColorsComponent = Object.assign(ColorsWedges, { Color, ColorThemable });

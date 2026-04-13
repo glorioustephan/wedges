@@ -1,4 +1,10 @@
-import { forwardRef, isValidElement, type HTMLAttributes } from "react";
+import {
+  forwardRef,
+  isValidElement,
+  type ForwardRefExoticComponent,
+  type HTMLAttributes,
+  type RefAttributes,
+} from "react";
 import { Slot } from "@radix-ui/react-slot";
 
 import { cn } from "@/lib/utils";
@@ -7,8 +13,8 @@ type ProseProps = HTMLAttributes<HTMLDivElement> & {
   asChild?: boolean;
 };
 
-const Prose = forwardRef<HTMLDivElement, ProseProps>(
-  ({ asChild = false, className, children, ...otherProps }, ref) => {
+const Prose: ForwardRefExoticComponent<ProseProps & RefAttributes<HTMLDivElement>> =
+  forwardRef<HTMLDivElement, ProseProps>(({ asChild = false, className, children, ...otherProps }, ref) => {
     const useAsChild = asChild && isValidElement(children);
     const Component = useAsChild ? Slot : "div";
 
@@ -60,8 +66,7 @@ const Prose = forwardRef<HTMLDivElement, ProseProps>(
         {children}
       </Component>
     );
-  }
-);
+  });
 
 Prose.displayName = "Prose";
 

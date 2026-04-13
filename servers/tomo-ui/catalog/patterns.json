@@ -1,0 +1,130 @@
+[
+  {
+    "entry_type": "pattern",
+    "pattern_id": "pattern:forms",
+    "name": "forms",
+    "display_name": "Forms",
+    "description": "Compositions for capture, validation, and submission flows.",
+    "category_id": "category:inputs",
+    "tags": [
+      "form",
+      "input",
+      "validation"
+    ],
+    "component_ids": [
+      "component:button",
+      "component:checkbox",
+      "component:checkbox-group",
+      "component:input",
+      "component:label",
+      "component:radio-group",
+      "component:select",
+      "component:slider",
+      "component:switch",
+      "component:switch-group",
+      "component:textarea",
+      "component:toggle",
+      "component:toggle-group"
+    ],
+    "search_text": "Forms Compositions for capture, validation, and submission flows. form input validation button checkbox checkbox-group input label radio-group select slider switch switch-group textarea toggle toggle-group"
+  },
+  {
+    "entry_type": "pattern",
+    "pattern_id": "pattern:navigation",
+    "name": "navigation",
+    "display_name": "Navigation",
+    "description": "Navigation structures such as tabs and menus.",
+    "category_id": "category:navigation",
+    "tags": [
+      "nav",
+      "menu",
+      "tabs",
+      "wayfinding"
+    ],
+    "component_ids": [
+      "component:button-group",
+      "component:dropdown-menu",
+      "component:kbd",
+      "component:tabs"
+    ],
+    "search_text": "Navigation Navigation structures such as tabs and menus. nav menu tabs wayfinding button-group dropdown-menu kbd tabs"
+  },
+  {
+    "entry_type": "pattern",
+    "pattern_id": "pattern:overlays",
+    "name": "overlays",
+    "display_name": "Overlays",
+    "description": "Layered surfaces, tooltips, popovers, and contextual menus.",
+    "category_id": "category:overlays",
+    "tags": [
+      "popover",
+      "tooltip",
+      "dropdown",
+      "layer"
+    ],
+    "component_ids": [
+      "component:dropdown-menu",
+      "component:popover",
+      "component:select",
+      "component:tooltip"
+    ],
+    "search_text": "Overlays Layered surfaces, tooltips, popovers, and contextual menus. popover tooltip dropdown layer dropdown-menu popover select tooltip"
+  },
+  {
+    "entry_type": "pattern",
+    "pattern_id": "pattern:tables",
+    "name": "tables",
+    "display_name": "Tables",
+    "description": "Data-dense tabular patterns and supporting affordances.",
+    "category_id": "category:display",
+    "tags": [
+      "table",
+      "data-grid",
+      "data-table"
+    ],
+    "component_ids": [],
+    "search_text": "Tables Data-dense tabular patterns and supporting affordances. table data-grid data-table"
+  },
+  {
+    "entry_type": "pattern",
+    "pattern_id": "pattern:empty-states",
+    "name": "empty-states",
+    "display_name": "Empty States",
+    "description": "Empty-state communication and call-to-action surfaces.",
+    "category_id": "category:feedback",
+    "tags": [
+      "empty",
+      "blank-slate",
+      "cta"
+    ],
+    "component_ids": [
+      "component:alert",
+      "component:button",
+      "component:loading"
+    ],
+    "search_text": "Empty States Empty-state communication and call-to-action surfaces. empty blank-slate cta alert button loading"
+  },
+  {
+    "entry_type": "pattern",
+    "pattern_id": "pattern:feedback",
+    "name": "feedback",
+    "display_name": "Feedback",
+    "description": "Progress, alerting, and status feedback patterns.",
+    "category_id": "category:feedback",
+    "tags": [
+      "alert",
+      "progress",
+      "loading",
+      "status"
+    ],
+    "component_ids": [
+      "component:alert",
+      "component:badge",
+      "component:loading",
+      "component:progress-bar",
+      "component:progress-circle",
+      "component:tag"
+    ],
+    "search_text": "Feedback Progress, alerting, and status feedback patterns. alert progress loading status alert badge loading progress-bar progress-circle tag"
+  }
+]

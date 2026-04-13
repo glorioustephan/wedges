@@ -1,0 +1,25 @@
+{
+  "generated_at": "2026-04-13T17:33:58.737Z",
+  "record_counts": {
+    "components": 27,
+    "tokens": 314,
+    "patterns": 6,
+    "categories": 7,
+    "component_tokens": 338,
+    "component_dependencies": 60,
+    "component_variants": 52,
+    "component_props": 265,
+    "component_subcomponents": 53,
+    "component_examples": 235,
+    "component_styles": 1521,
+    "component_exact_terms": 12121,
+    "token_exact_terms": 8004,
+    "pattern_exact_terms": 67,
+    "style_exact_terms": 18700
+  },
+  "referential_integrity": {
+    "invalid_component_categories": [],
+    "invalid_pattern_components": []
+  },
+  "fts_version": "fts5"
+}

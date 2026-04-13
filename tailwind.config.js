@@ -1,4 +1,4 @@
-import { wedgesTW } from "./packages/wedges/src/tw-plugin/plugin.ts";
+import { wedgesTW } from "./packages/ui/src/tw-plugin/plugin.ts";
 
 /** @type {import('tailwindcss').Config} */
 const config = {

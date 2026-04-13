@@ -1,0 +1,291 @@
+{
+  "summary": {
+    "generated_at": "2026-04-13T17:34:17.511Z",
+    "mean_precision_at_5": 0.2875000000000001,
+    "mean_ndcg_at_10": 1,
+    "mean_first_relevant_rank": 1
+  },
+  "results": [
+    {
+      "id": "component-dropdown",
+      "query": "dropdown",
+      "target": "components",
+      "relevant_ids": [
+        "component:dropdown-menu",
+        "component:select"
+      ],
+      "result_ids": [
+        "component:dropdown-menu",
+        "component:select"
+      ],
+      "precision_at_5": 0.4,
+      "ndcg_at_10": 1,
+      "first_relevant_rank": 1
+    },
+    {
+      "id": "component-modal",
+      "query": "modal",
+      "target": "components",
+      "relevant_ids": [
+        "component:popover"
+      ],
+      "result_ids": [
+        "component:popover"
+      ],
+      "precision_at_5": 0.2,
+      "ndcg_at_10": 1,
+      "first_relevant_rank": 1
+    },
+    {
+      "id": "pattern-table",
+      "query": "table",
+      "target": "patterns",
+      "relevant_ids": [
+        "pattern:tables"
+      ],
+      "result_ids": [
+        "pattern:tables"
+      ],
+      "precision_at_5": 0.2,
+      "ndcg_at_10": 1,
+      "first_relevant_rank": 1
+    },
+    {
+      "id": "token-brand-primary",
+      "query": "brand primary",
+      "target": "tokens",
+      "relevant_ids": [
+        "token:color:dark.primary.DEFAULT",
+        "token:color:light.primary.DEFAULT"
+      ],
+      "result_ids": [
+        "token:color:dark.primary.DEFAULT",
+        "token:color:light.primary.DEFAULT",
+        "token:color:dark.primary.100",
+        "token:color:dark.primary.200",
+        "token:color:dark.primary.300",
+        "token:color:dark.primary.400",
+        "token:color:dark.primary.50",
+        "token:color:dark.primary.500",
+        "token:color:dark.primary.600",
+        "token:color:dark.primary.700"
+      ],
+      "precision_at_5": 0.4,
+      "ndcg_at_10": 1,
+      "first_relevant_rank": 1
+    },
+    {
+      "id": "token-surface",
+      "query": "surface",
+      "target": "tokens",
+      "relevant_ids": [
+        "token:color:dark.surface.DEFAULT",
+        "token:color:light.surface.DEFAULT"
+      ],
+      "result_ids": [
+        "token:color:dark.surface.DEFAULT",
+        "token:color:light.surface.DEFAULT",
+        "token:color:dark.surface.overlay-focus",
+        "token:color:dark.surface.overlay-foreground",
+        "token:color:dark.surface.100",
+        "token:color:dark.surface.200",
+        "token:color:dark.surface.300",
+        "token:color:dark.surface.400",
+        "token:color:dark.surface.50",
+        "token:color:dark.surface.500"
+      ],
+      "precision_at_5": 0.4,
+      "ndcg_at_10": 1,
+      "first_relevant_rank": 1
+    },
+    {
+      "id": "token-danger",
+      "query": "danger",
+      "target": "tokens",
+      "relevant_ids": [
+        "token:color:dark.destructive.DEFAULT",
+        "token:color:light.destructive.DEFAULT"
+      ],
+      "result_ids": [
+        "token:color:dark.destructive.DEFAULT",
+        "token:color:light.destructive.DEFAULT"
+      ],
+      "precision_at_5": 0.4,
+      "ndcg_at_10": 1,
+      "first_relevant_rank": 1
+    },
+    {
+      "id": "intent-dark-nav-search",
+      "query": "dark nav with search",
+      "target": "patterns",
+      "relevant_ids": [
+        "pattern:navigation"
+      ],
+      "result_ids": [
+        "pattern:navigation"
+      ],
+      "precision_at_5": 0.2,
+      "ndcg_at_10": 1,
+      "first_relevant_rank": 1
+    },
+    {
+      "id": "intent-form-error-states",
+      "query": "form error states",
+      "target": "patterns",
+      "relevant_ids": [
+        "pattern:forms",
+        "pattern:empty-states"
+      ],
+      "result_ids": [
+        "pattern:forms",
+        "pattern:empty-states"
+      ],
+      "precision_at_5": 0.4,
+      "ndcg_at_10": 1,
+      "first_relevant_rank": 1
+    },
+    {
+      "id": "component-tabs-trigger",
+      "query": "tabs trigger before",
+      "target": "components",
+      "relevant_ids": [
+        "component:tabs"
+      ],
+      "result_ids": [
+        "component:tabs",
+        "component:select",
+        "component:popover",
+        "component:radio-group",
+        "component:tooltip",
+        "component:toggle",
+        "component:tag",
+        "component:badge",
+        "component:alert",
+        "component:dropdown-menu"
+      ],
+      "precision_at_5": 0.2,
+      "ndcg_at_10": 1,
+      "first_relevant_rank": 1
+    },
+    {
+      "id": "component-tabs-trigger-exact",
+      "query": "Tabs.Trigger.before",
+      "target": "components",
+      "relevant_ids": [
+        "component:tabs"
+      ],
+      "result_ids": [
+        "component:tabs"
+      ],
+      "precision_at_5": 0.2,
+      "ndcg_at_10": 1,
+      "first_relevant_rank": 1
+    },
+    {
+      "id": "component-destructive-dropdown",
+      "query": "destructive dropdown item",
+      "target": "components",
+      "relevant_ids": [
+        "component:dropdown-menu"
+      ],
+      "result_ids": [
+        "component:dropdown-menu",
+        "component:select",
+        "component:button-group",
+        "component:avatar-group",
+        "component:radio-group",
+        "component:toggle-group",
+        "component:checkbox",
+        "component:switch-group",
+        "component:checkbox-group",
+        "component:input"
+      ],
+      "precision_at_5": 0.2,
+      "ndcg_at_10": 1,
+      "first_relevant_rank": 1
+    },
+    {
+      "id": "component-dropdown-exact",
+      "query": "dropdown-menu",
+      "target": "components",
+      "relevant_ids": [
+        "component:dropdown-menu"
+      ],
+      "result_ids": [
+        "component:dropdown-menu"
+      ],
+      "precision_at_5": 0.2,
+      "ndcg_at_10": 1,
+      "first_relevant_rank": 1
+    },
+    {
+      "id": "component-keyboard-shortcut",
+      "query": "keyboard shortcut",
+      "target": "components",
+      "relevant_ids": [
+        "component:kbd",
+        "component:dropdown-menu"
+      ],
+      "result_ids": [
+        "component:kbd",
+        "component:dropdown-menu"
+      ],
+      "precision_at_5": 0.4,
+      "ndcg_at_10": 1,
+      "first_relevant_rank": 1
+    },
+    {
+      "id": "component-select-scroll-buttons",
+      "query": "select scroll buttons",
+      "target": "components",
+      "relevant_ids": [
+        "component:select"
+      ],
+      "result_ids": [
+        "component:select",
+        "component:radio-group",
+        "component:checkbox-group",
+        "component:button-group",
+        "component:slider",
+        "component:toggle-group",
+        "component:avatar",
+        "component:dropdown-menu",
+        "component:button",
+        "component:checkbox"
+      ],
+      "precision_at_5": 0.2,
+      "ndcg_at_10": 1,
+      "first_relevant_rank": 1
+    },
+    {
+      "id": "token-overlay-focus-exact",
+      "query": "overlay-focus",
+      "target": "tokens",
+      "relevant_ids": [
+        "token:color:dark.surface.overlay-focus",
+        "token:color:light.surface.overlay-focus"
+      ],
+      "result_ids": [
+        "token:color:dark.surface.overlay-focus",
+        "token:color:light.surface.overlay-focus"
+      ],
+      "precision_at_5": 0.4,
+      "ndcg_at_10": 1,
+      "first_relevant_rank": 1
+    },
+    {
+      "id": "pattern-navigation-exact",
+      "query": "pattern:navigation",
+      "target": "patterns",
+      "relevant_ids": [
+        "pattern:navigation"
+      ],
+      "result_ids": [
+        "pattern:navigation"
+      ],
+      "precision_at_5": 0.2,
+      "ndcg_at_10": 1,
+      "first_relevant_rank": 1
+    }
+  ]
+}

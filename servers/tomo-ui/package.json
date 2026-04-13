@@ -1,0 +1,45 @@
+{
+  "name": "@wedges/tomo-ui",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "SQLite WASM-backed UI catalog MCP server for the Wedges UI package.",
+  "bin": {
+    "tomo-ui": "./dist/main.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "schemas",
+    "benchmarks/golden-queries.json"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts src/main.ts --format esm --dts --clean --target node22 --sourcemap",
+    "start": "node dist/main.js",
+    "dev": "tsx watch src/main.ts",
+    "lint": "eslint 'src/**/*.ts'",
+    "lint:fix": "eslint 'src/**/*.ts' --fix",
+    "parse-catalog": "tsx src/cli.ts parse-catalog",
+    "build-db": "tsx src/cli.ts build-db",
+    "rebuild": "tsx src/cli.ts rebuild",
+    "benchmark": "tsx src/cli.ts benchmark"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.27.1",
+    "@sqlite.org/sqlite-wasm": "^3.51.2-build8",
+    "gray-matter": "^4.0.3",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@wedges/eslint-config": "workspace:*",
+    "tsup": "^8.2.4",
+    "tsx": "^4.21.0",
+    "typescript": "^5.5.4"
+  }
+}

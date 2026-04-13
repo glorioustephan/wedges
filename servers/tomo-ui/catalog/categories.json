@@ -1,0 +1,86 @@
+[
+  {
+    "entry_type": "category",
+    "category_id": "category:inputs",
+    "name": "inputs",
+    "display_name": "Inputs",
+    "description": "Field-level input controls and supporting labels.",
+    "tags": [
+      "forms",
+      "fields",
+      "entry"
+    ]
+  },
+  {
+    "entry_type": "category",
+    "category_id": "category:selection",
+    "name": "selection",
+    "display_name": "Selection",
+    "description": "Choice controls, toggles, and grouped selectors.",
+    "tags": [
+      "choice",
+      "toggle",
+      "group"
+    ]
+  },
+  {
+    "entry_type": "category",
+    "category_id": "category:feedback",
+    "name": "feedback",
+    "display_name": "Feedback",
+    "description": "Status, loading, and progress communication patterns.",
+    "tags": [
+      "status",
+      "loading",
+      "progress"
+    ]
+  },
+  {
+    "entry_type": "category",
+    "category_id": "category:overlays",
+    "name": "overlays",
+    "display_name": "Overlays",
+    "description": "Popups, menus, and contextual surfaces layered over content.",
+    "tags": [
+      "popover",
+      "tooltip",
+      "menu"
+    ]
+  },
+  {
+    "entry_type": "category",
+    "category_id": "category:navigation",
+    "name": "navigation",
+    "display_name": "Navigation",
+    "description": "Navigational structures and segmented controls.",
+    "tags": [
+      "nav",
+      "menu",
+      "tabs"
+    ]
+  },
+  {
+    "entry_type": "category",
+    "category_id": "category:display",
+    "name": "display",
+    "display_name": "Display",
+    "description": "Display primitives for short status or descriptive content.",
+    "tags": [
+      "badge",
+      "tag",
+      "copy"
+    ]
+  },
+  {
+    "entry_type": "category",
+    "category_id": "category:identity",
+    "name": "identity",
+    "display_name": "Identity",
+    "description": "Identity and profile-oriented media components.",
+    "tags": [
+      "avatar",
+      "profile",
+      "user"
+    ]
+  }
+]

@@ -1,0 +1,15 @@
+{
+  "version": "1.0.0",
+  "generated_at": "2026-04-13T17:33:57.963Z",
+  "source_roots": [
+    "packages/ui",
+    "apps/docs",
+    "apps/storybook"
+  ],
+  "counts": {
+    "components": 27,
+    "tokens": 314,
+    "patterns": 6,
+    "categories": 7
+  }
+}

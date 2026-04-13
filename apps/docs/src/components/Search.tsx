@@ -8,7 +8,14 @@
 
 "use client";
 
-import { forwardRef, useEffect, useState, type HTMLAttributes } from "react";
+import {
+  forwardRef,
+  useEffect,
+  useState,
+  type ForwardRefExoticComponent,
+  type HTMLAttributes,
+  type RefAttributes,
+} from "react";
 import Link from "next/link";
 import { DocSearchModal, useDocSearchKeyboardEvents } from "@docsearch/react";
 import { SearchIcon } from "@iconicicons/react";
@@ -50,7 +57,9 @@ function Hit({ hit, children }) {
   );
 }
 
-const Search = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>((props, ref) => {
+const Search: ForwardRefExoticComponent<
+  HTMLAttributes<HTMLDivElement> & RefAttributes<HTMLDivElement>
+> = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>((props, ref) => {
   const { className, ...otherProps } = props;
   const { isSearchOpen, toggleSearch } = useSidebar();
   const [modifierKey, setModifierKey] = useState<KbdKey>("command");

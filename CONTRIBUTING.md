@@ -8,7 +8,7 @@ Our repository is managed with [PNPM](https://pnpm.io/). Make sure you have PNPM
 
 It is structured as a [Turborepo](https://turbo.build/repo) monorepo and it contains two main directories:
 
-1. **packages/wedges**:
+1. **packages/ui**:
    This is the heart of our project – the UI library itself. Here you'll find all the components, utilities, TailwindCSS plugin and core functionality of the Wedges UI library.
 
 2. **apps/docs**:

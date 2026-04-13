@@ -1,8 +1,15 @@
-import { forwardRef, type SVGProps } from "react";
+import {
+  forwardRef,
+  type ForwardRefExoticComponent,
+  type RefAttributes,
+  type SVGProps,
+} from "react";
 
 import { cn } from "@/lib/utils";
 
-const LemonSqueezyLogo = forwardRef<SVGSVGElement, SVGProps<SVGSVGElement>>((props, ref) => {
+const LemonSqueezyLogo: ForwardRefExoticComponent<
+  SVGProps<SVGSVGElement> & RefAttributes<SVGSVGElement>
+> = forwardRef<SVGSVGElement, SVGProps<SVGSVGElement>>((props, ref) => {
   return (
     <svg ref={ref} fill="none" height="28" viewBox="0 0 212 28" width="212" {...props}>
       <path
@@ -105,10 +112,11 @@ const LemonSqueezyLogo = forwardRef<SVGSVGElement, SVGProps<SVGSVGElement>>((pro
   );
 });
 
-const LemonSqueezyLogomark = forwardRef<
-  SVGSVGElement,
-  SVGProps<SVGSVGElement> & { loading?: boolean }
->(({ loading, ...otherProps }, ref) => {
+type LemonSqueezyLogomarkProps = SVGProps<SVGSVGElement> & { loading?: boolean };
+
+const LemonSqueezyLogomark: ForwardRefExoticComponent<
+  LemonSqueezyLogomarkProps & RefAttributes<SVGSVGElement>
+> = forwardRef<SVGSVGElement, LemonSqueezyLogomarkProps>(({ loading, ...otherProps }, ref) => {
   return (
     <svg ref={ref} fill="#FFC233" height="28" viewBox="0 0 21 28" width="21" {...otherProps}>
       <path

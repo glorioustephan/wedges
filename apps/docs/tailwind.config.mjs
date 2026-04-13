@@ -1,5 +1,4 @@
 import { wedgesPalette, wedgesTW } from "@lemonsqueezy/wedges";
-import tailwindTypography from "@tailwindcss/typography";
 
 const primaryBlue = {
   100: "#DAF0FF",
@@ -15,32 +14,11 @@ const primaryBlue = {
 };
 
 const config = {
-  content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/examples/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/content/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./public/docs/**/*.mdx",
-
-    "node_modules/@lemonsqueezy/wedges/dist/**/*.{js,ts,jsx,tsx}",
-  ],
   darkMode: "class",
   theme: {
     extend: {
       screens: {
         "2xl": "82rem",
-      },
-      typography: {
-        DEFAULT: {
-          css: {
-            pre: {
-              padding: 0,
-              borderRadius: "0.5rem",
-              margin: 0,
-            },
-          },
-        },
       },
       animation: {
         flash: "flash 1s ease-in-out infinite",
@@ -142,7 +120,6 @@ const config = {
         },
       },
     }),
-    tailwindTypography,
   ],
 };
 

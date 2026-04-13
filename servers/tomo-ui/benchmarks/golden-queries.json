@@ -1,0 +1,101 @@
+[
+  {
+    "id": "component-dropdown",
+    "target": "components",
+    "query": "dropdown",
+    "relevant_ids": ["component:dropdown-menu", "component:select"]
+  },
+  {
+    "id": "component-modal",
+    "target": "components",
+    "query": "modal",
+    "relevant_ids": ["component:popover"]
+  },
+  {
+    "id": "pattern-table",
+    "target": "patterns",
+    "query": "table",
+    "relevant_ids": ["pattern:tables"]
+  },
+  {
+    "id": "token-brand-primary",
+    "target": "tokens",
+    "query": "brand primary",
+    "relevant_ids": ["token:color:dark.primary.DEFAULT", "token:color:light.primary.DEFAULT"]
+  },
+  {
+    "id": "token-surface",
+    "target": "tokens",
+    "query": "surface",
+    "relevant_ids": ["token:color:dark.surface.DEFAULT", "token:color:light.surface.DEFAULT"]
+  },
+  {
+    "id": "token-danger",
+    "target": "tokens",
+    "query": "danger",
+    "relevant_ids": ["token:color:dark.destructive.DEFAULT", "token:color:light.destructive.DEFAULT"]
+  },
+  {
+    "id": "intent-dark-nav-search",
+    "target": "patterns",
+    "query": "dark nav with search",
+    "relevant_ids": ["pattern:navigation"]
+  },
+  {
+    "id": "intent-form-error-states",
+    "target": "patterns",
+    "query": "form error states",
+    "relevant_ids": ["pattern:forms", "pattern:empty-states"]
+  },
+  {
+    "id": "component-tabs-trigger",
+    "target": "components",
+    "query": "tabs trigger before",
+    "relevant_ids": ["component:tabs"]
+  },
+  {
+    "id": "component-tabs-trigger-exact",
+    "target": "components",
+    "query": "Tabs.Trigger.before",
+    "relevant_ids": ["component:tabs"]
+  },
+  {
+    "id": "component-destructive-dropdown",
+    "target": "components",
+    "query": "destructive dropdown item",
+    "relevant_ids": ["component:dropdown-menu"]
+  },
+  {
+    "id": "component-dropdown-exact",
+    "target": "components",
+    "query": "dropdown-menu",
+    "relevant_ids": ["component:dropdown-menu"]
+  },
+  {
+    "id": "component-keyboard-shortcut",
+    "target": "components",
+    "query": "keyboard shortcut",
+    "relevant_ids": ["component:kbd", "component:dropdown-menu"]
+  },
+  {
+    "id": "component-select-scroll-buttons",
+    "target": "components",
+    "query": "select scroll buttons",
+    "relevant_ids": ["component:select"]
+  },
+  {
+    "id": "token-overlay-focus-exact",
+    "target": "tokens",
+    "query": "overlay-focus",
+    "relevant_ids": [
+      "token:color:dark.surface.overlay-focus",
+      "token:color:light.surface.overlay-focus"
+    ]
+  },
+  {
+    "id": "pattern-navigation-exact",
+    "target": "patterns",
+    "query": "pattern:navigation",
+    "relevant_ids": ["pattern:navigation"]
+  }
+]

@@ -1,4 +1,11 @@
-import { forwardRef, Fragment, type ComponentPropsWithoutRef, type ElementRef } from "react";
+import {
+  forwardRef,
+  Fragment,
+  type ComponentPropsWithoutRef,
+  type ElementRef,
+  type ForwardRefExoticComponent,
+  type RefAttributes,
+} from "react";
 import Link from "next/link";
 import { Button as WedgesButton } from "@lemonsqueezy/wedges";
 
@@ -17,7 +24,9 @@ function HoverComponent({ children }: { children: React.ReactNode }) {
   return <span className="relative isolate">{children}</span>;
 }
 
-export const Button = forwardRef<ButtonElement, ButtonProps>((props, ref) => {
+export const Button: ForwardRefExoticComponent<
+  ButtonProps & RefAttributes<ButtonElement>
+> = forwardRef<ButtonElement, ButtonProps>((props, ref) => {
   const {
     after,
     children,

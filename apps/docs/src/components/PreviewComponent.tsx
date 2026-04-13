@@ -1,6 +1,15 @@
 "use client";
 
-import { forwardRef, Suspense, useEffect, useMemo, useRef, useState } from "react";
+import {
+  forwardRef,
+  Suspense,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type ForwardRefExoticComponent,
+  type RefAttributes,
+} from "react";
 import { Demos } from "@/examples";
 import { CodeIcon, EyeIcon, MoonIcon, SunIcon } from "@iconicicons/react";
 import { Button, Tabs, type TabsElement, type TabsProps } from "@lemonsqueezy/wedges";
@@ -20,8 +29,9 @@ type PreviewComponentProps = TabsProps & {
   name: string;
 };
 
-export const PreviewComponent = forwardRef<PreviewComponentType, PreviewComponentProps>(
-  ({ align, children, name, ...otherProps }, ref) => {
+export const PreviewComponent: ForwardRefExoticComponent<
+  PreviewComponentProps & RefAttributes<PreviewComponentType>
+> = forwardRef<PreviewComponentType, PreviewComponentProps>(({ align, children, name, ...otherProps }, ref) => {
     const previewRef = useRef<HTMLDivElement>(null);
     const [theme, setTheme] = useState<"light" | "dark">("light");
 
@@ -110,8 +120,7 @@ export const PreviewComponent = forwardRef<PreviewComponentType, PreviewComponen
         </Tabs.Content>
       </Tabs>
     );
-  }
-);
+  });
 
 PreviewComponent.displayName = "PreviewComponent";
 
