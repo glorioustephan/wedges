@@ -1,9 +1,27 @@
 import type { Preview } from "@storybook/react";
-import { withThemeByClassName } from "@storybook/addon-themes";
+import React from "react";
 
 import "../src/storybook.css";
+import { PreviewFrame } from "../src/storybook/PreviewFrame";
 
 const preview: Preview = {
+  globalTypes: {
+    theme: {
+      name: "Theme",
+      description: "Preview theme",
+      toolbar: {
+        icon: "mirror",
+        dynamicTitle: true,
+        items: [
+          { value: "light", title: "Light" },
+          { value: "dark", title: "Dark" },
+        ],
+      },
+    },
+  },
+  initialGlobals: {
+    theme: "light",
+  },
   parameters: {
     controls: {
       matchers: {
@@ -14,13 +32,20 @@ const preview: Preview = {
     layout: "centered",
   },
   decorators: [
-    withThemeByClassName({
-      themes: {
-        light: "",
-        dark: "dark",
-      },
-      defaultTheme: "light",
-    }),
+    (Story, context) => {
+      const align = context.parameters.previewAlign ?? "center";
+      const theme = context.globals.theme === "dark" ? "dark" : undefined;
+
+      return React.createElement(
+        "div",
+        { className: theme },
+        React.createElement(
+          PreviewFrame,
+          { align },
+          React.createElement(Story)
+        )
+      );
+    },
   ],
 };
 

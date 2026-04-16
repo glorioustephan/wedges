@@ -81,4 +81,5 @@ const Input = React.forwardRef<InputElement, InputProps>(
 
 Input.displayName = "Input";
 
+export { Input };
 export default Input;

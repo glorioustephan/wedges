@@ -1,4 +1,5 @@
 import { join } from "node:path";
+import { performance } from "node:perf_hooks";
 
 import { paths } from "../shared/paths.js";
 import { readText, writeJson } from "../shared/utils.js";
@@ -41,6 +42,7 @@ export const runBenchmarks = async () => {
   const query_file = join(paths.benchmarks_dir, "golden-queries.json");
   const queries = JSON.parse(await readText(query_file)) as GoldenQuery[];
   const service = await CatalogSearchService.create();
+  await service.warmup();
 
   try {
     const results = [];
@@ -115,6 +117,59 @@ export const runBenchmarks = async () => {
       });
     }
 
+    const warm_operations = [
+      {
+        id: "get_component_card_button",
+        run: () => service.get_component_card("button"),
+      },
+      {
+        id: "recommend_component_button",
+        run: () =>
+          service.recommend_component({
+            query: "which button should we use?",
+            limit: 3,
+          }),
+      },
+      {
+        id: "build_ui_context_settings_form",
+        run: () =>
+          service.build_ui_context({
+            query: "build a settings form",
+            limit: 3,
+          }),
+      },
+      {
+        id: "search_examples_tabs",
+        run: () =>
+          service.search_examples({
+            query: "tabs trigger",
+            component: "tabs",
+            limit: 3,
+          }),
+      },
+    ] as const;
+
+    const warm_operation_results = [];
+
+    for (const operation of warm_operations) {
+      const start = performance.now();
+      const value = await operation.run();
+      const ms = performance.now() - start;
+
+      warm_operation_results.push({
+        id: operation.id,
+        ms: Number(ms.toFixed(3)),
+        bytes: Buffer.byteLength(JSON.stringify(value), "utf8"),
+      });
+    }
+
+    const cold_start = performance.now();
+    const cold_service = await CatalogSearchService.create();
+    const cold_card = await cold_service.get_component_card("button");
+    const cold_card_ms = performance.now() - cold_start;
+    const cold_card_bytes = Buffer.byteLength(JSON.stringify(cold_card ?? null), "utf8");
+    await cold_service.close();
+
     const summary = {
       generated_at: new Date().toISOString(),
       mean_precision_at_5:
@@ -126,9 +181,17 @@ export const runBenchmarks = async () => {
           .map((result) => result.first_relevant_rank)
           .filter((value): value is number => value !== null)
           .reduce((total, value, _, array) => total + value / array.length, 0),
+      cold_start_component_card_ms: Number(cold_card_ms.toFixed(3)),
+      cold_start_component_card_bytes: cold_card_bytes,
+      warm_operation_mean_ms:
+        warm_operation_results.reduce((total, result) => total + result.ms, 0) /
+        Math.max(warm_operation_results.length, 1),
+      warm_operation_mean_bytes:
+        warm_operation_results.reduce((total, result) => total + result.bytes, 0) /
+        Math.max(warm_operation_results.length, 1),
     };
 
-    const report = { summary, results };
+    const report = { summary, results, warm_operation_results };
     await writeJson(join(paths.benchmarks_dir, "results.json"), report);
     return report;
   } finally {

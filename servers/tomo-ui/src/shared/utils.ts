@@ -13,10 +13,10 @@ export const toPosixPath = (value: string) => value.split(sep).join("/");
 
 export const repoRelative = (root: string, target: string) => toPosixPath(relative(root, target));
 
-export const unique = <T>(values: Iterable<T>) => [...new Set(values)];
+export const unique = <T>(values: Iterable<T>) => Array.from(new Set(values));
 
 export const sorted = <T>(values: Iterable<T>, compare?: (left: T, right: T) => number) =>
-  [...values].sort(compare);
+  Array.from(values).sort(compare);
 
 export const ensureDir = async (path: string) => {
   await mkdir(path, { recursive: true });
@@ -72,8 +72,91 @@ export const chunkText = (value: string, maxLength = 400) => {
   return `${normalized.slice(0, maxLength - 1).trim()}…`;
 };
 
+const searchStopWords = new Set([
+  "a",
+  "an",
+  "and",
+  "are",
+  "as",
+  "at",
+  "be",
+  "best",
+  "build",
+  "by",
+  "can",
+  "component",
+  "components",
+  "could",
+  "create",
+  "do",
+  "for",
+  "from",
+  "get",
+  "help",
+  "how",
+  "i",
+  "in",
+  "is",
+  "it",
+  "make",
+  "need",
+  "of",
+  "on",
+  "or",
+  "page",
+  "pages",
+  "please",
+  "recommend",
+  "show",
+  "should",
+  "screen",
+  "screens",
+  "system",
+  "systems",
+  "the",
+  "to",
+  "ui",
+  "use",
+  "using",
+  "vs",
+  "want",
+  "we",
+  "what",
+  "when",
+  "which",
+  "with",
+  "would",
+  "you",
+  "your",
+  "compare",
+  "comparison",
+  "different",
+  "difference",
+  "differences",
+  "option",
+  "options",
+  "alternative",
+  "alternatives",
+  "recommended",
+  "maybe",
+  "need",
+  "find",
+]);
+
 export const normalizeQueryTokens = (value: string) =>
-  unique(value.toLowerCase().match(/[a-z0-9@._:/\-\[\]=]+/g) ?? []);
+  unique(
+    (value.toLowerCase().match(/[a-z0-9@._:/\-\[\]=]+/g) ?? []).filter((token) => {
+      if (!token) {
+        return false;
+      }
+
+      if (searchStopWords.has(token)) {
+        return false;
+      }
+
+      return true;
+    })
+  );
 
 export const normalizeLookupValue = (value: string) => value.toLowerCase().trim().replace(/\s+/g, " ");
 
@@ -101,7 +184,7 @@ export const expandLookupValues = (value: string) => {
     values.add(spaced.replace(/\s+/g, "."));
   }
 
-  return [...values].filter(Boolean);
+  return Array.from(values).filter(Boolean);
 };
 
 export const maybeJsonParse = <T>(value: string | null | undefined, fallback: T) => {

@@ -1,4 +1,7 @@
 import type {
+  CatalogBuildCard,
+  CatalogBuildCardExample,
+  CatalogBuildContext,
   CatalogCategory,
   CatalogComponent,
   CatalogPattern,
@@ -7,10 +10,12 @@ import type {
 import {
   compareStrings,
   expandLookupValues,
+  chunkText,
   maybeJsonParse,
   normalizeLookupValue,
   normalizeQueryTokens,
 } from "../shared/utils.js";
+import { build_context_steps, compare_component_cards } from "../shared/build-cards.js";
 import { ftsScoreSql, open_runtime_database } from "../db/build-db.js";
 import { SqliteWasmDatabase } from "../db/sqlite.js";
 
@@ -112,6 +117,54 @@ type StyleRow = {
   token_display_name?: string;
   token_raw_value?: string;
   fts_score?: number;
+};
+
+type ComponentCardRow = {
+  component_id: string;
+  name: string;
+  display_name: string;
+  framework: string;
+  status: string;
+  family: string;
+  source_path: string;
+  summary: string;
+  guidance: string;
+  primary_props_json: string;
+  variant_groups_json: string;
+  composition_order_json: string;
+  subcomponents_json: string;
+  examples_json: string;
+  accessibility_notes_json: string;
+  token_ids_json: string;
+  linked_tokens_json: string;
+  style_signals_json: string;
+  category_ids_json: string;
+  pattern_ids_json: string;
+  tags_json: string;
+  intent_labels_json: string;
+  supported_themes_json: string;
+  search_text: string;
+  rationale: string;
+  confidence: number;
+};
+
+type ExampleRow = {
+  component_id: string;
+  display_name: string;
+  component_name: string;
+  example_id: string;
+  title: string;
+  file_path: string;
+  source: string;
+  code: string;
+  fts_score?: number;
+};
+
+type ExampleSearchOptions = {
+  query: string;
+  component?: string;
+  limit?: number;
+  debug?: boolean;
 };
 
 export type CatalogStyleMatch = {
@@ -259,6 +312,39 @@ const parseCategory = (row: CategoryRow): CatalogCategory => ({
   display_name: row.display_name,
   description: row.description,
   tags: maybeJsonParse<string[]>(row.tags_json, []),
+});
+
+const parseBuildCard = (row: ComponentCardRow): CatalogBuildCard => ({
+  entry_type: "component-card",
+  component_id: row.component_id,
+  name: row.name,
+  display_name: row.display_name,
+  framework: row.framework as CatalogBuildCard["framework"],
+  status: row.status as CatalogBuildCard["status"],
+  family: row.family,
+  source_path: row.source_path,
+  summary: row.summary,
+  guidance: row.guidance,
+  primary_props: maybeJsonParse<CatalogBuildCard["primary_props"]>(row.primary_props_json, []),
+  variant_groups: maybeJsonParse<CatalogBuildCard["variant_groups"]>(row.variant_groups_json, []),
+  composition_order: maybeJsonParse<string[]>(row.composition_order_json, []),
+  subcomponents: maybeJsonParse<CatalogBuildCard["subcomponents"]>(row.subcomponents_json, []),
+  examples: maybeJsonParse<CatalogBuildCard["examples"]>(row.examples_json, []),
+  accessibility_notes: maybeJsonParse<string[]>(row.accessibility_notes_json, []),
+  token_ids: maybeJsonParse<string[]>(row.token_ids_json, []),
+  linked_tokens: maybeJsonParse<CatalogBuildCard["linked_tokens"]>(row.linked_tokens_json, []),
+  style_signals: maybeJsonParse<CatalogBuildCard["style_signals"]>(row.style_signals_json, []),
+  category_ids: maybeJsonParse<string[]>(row.category_ids_json, []),
+  pattern_ids: maybeJsonParse<string[]>(row.pattern_ids_json, []),
+  tags: maybeJsonParse<string[]>(row.tags_json, []),
+  intent_labels: maybeJsonParse<string[]>(row.intent_labels_json, []),
+  supported_themes: maybeJsonParse<CatalogBuildCard["supported_themes"]>(
+    row.supported_themes_json,
+    ["light"]
+  ),
+  search_text: row.search_text,
+  rationale: row.rationale,
+  confidence: row.confidence,
 });
 
 const escapeFtsTerm = (value: string) => value.replace(/"/g, '""');
@@ -467,7 +553,7 @@ const collapseExactRows = <
   });
 
   return new Map(
-    [...collapsed.entries()].map(([id, value]) => [
+    Array.from(collapsed.entries()).map(([id, value]) => [
       id,
       {
         exact_score: value.exact_score,
@@ -560,6 +646,71 @@ const styleEvidence = (
   };
 };
 
+const exampleEvidence = (row: ExampleRow, query: string, exact_evidence: SearchMatchEvidence[] = []) => {
+  const terms = normalizeQueryTokens(query);
+  const heuristic = dedupeEvidence([
+    ...collectValueEvidence(terms, [row.display_name, row.component_name, row.component_id], "component"),
+    ...collectValueEvidence(terms, [row.example_id, row.title], "example"),
+    ...collectValueEvidence(terms, [row.file_path, row.source], "path"),
+    ...collectValueEvidence(terms, [row.code], "code"),
+  ]);
+  const evidence = dedupeEvidence([...exact_evidence, ...heuristic]);
+  return {
+    evidence,
+    rationale: rationaleFromEvidence(evidence),
+  };
+};
+
+const exampleScore = (row: ExampleRow, query: string, fts_score: number | undefined): ScoredMatch => {
+  const terms = normalizeQueryTokens(query);
+  const lowered_query = query.toLowerCase().trim();
+  const name_values = [row.display_name, row.component_name, row.component_id];
+  const example_values = [row.example_id, row.title];
+  const text_values = [row.file_path, row.source, row.code];
+  const breakdown: ScoreBreakdown = {
+    fts: baseScore(fts_score),
+  };
+  let exactness = 0;
+
+  if (lowered_query && hasExactMatch(lowered_query, [...name_values, ...example_values])) {
+    breakdown.exact = 11;
+    exactness += 3;
+  }
+
+  if (lowered_query && hasPhraseMatch(lowered_query, [...name_values, ...example_values, ...text_values])) {
+    breakdown.phrase = 2.5;
+    exactness += 1;
+  }
+
+  const componentMatches = matchCount(terms, name_values);
+  if (componentMatches > 0) {
+    breakdown.component = componentMatches * 2.25;
+  }
+
+  const exampleMatches = matchCount(terms, example_values);
+  if (exampleMatches > 0) {
+    breakdown.example = exampleMatches * 2;
+  }
+
+  const textMatches = matchCount(terms, text_values);
+  if (textMatches > 0) {
+    breakdown.text = textMatches;
+  }
+
+  const coverage = matchCount(terms, [...name_values, ...example_values, ...text_values]);
+  const coverage_boost = coverageBonus(coverage, terms.length);
+  if (coverage_boost > 0) {
+    breakdown.coverage = coverage_boost;
+  }
+
+  return {
+    score: Object.values(breakdown).reduce((total, value) => total + value, 0),
+    breakdown,
+    coverage,
+    exactness,
+  };
+};
+
 const runFtsPlans = <T>(
   plans: FtsQueryPlan[],
   execute: (fts_query: string) => T[],
@@ -608,6 +759,7 @@ const componentScore = (
 ): ScoredMatch => {
   const tokens = normalizeQueryTokens(query);
   const lowered_query = query.toLowerCase().trim();
+  const single_term_query = tokens.length === 1;
   const name_values = [component.component_id, component.name, component.display_name];
   const metadata_values = [...component.tags, ...component.intent_labels];
   const api_values = [
@@ -660,7 +812,7 @@ const componentScore = (
 
   const apiMatches = matchCount(tokens, api_values);
   if (apiMatches > 0) {
-    breakdown.api_terms = apiMatches * 2;
+    breakdown.api_terms = apiMatches * (single_term_query ? 1 : 2);
   }
 
   const tokenMatches = matchCount(tokens, token_values);
@@ -670,19 +822,19 @@ const componentScore = (
 
   const descriptionMatches = matchCount(tokens, text_values);
   if (descriptionMatches > 0) {
-    breakdown.text = descriptionMatches * 0.75;
+    breakdown.text = descriptionMatches * (single_term_query ? 0.3 : 0.75);
   }
 
   if (typeof aux_scores?.api === "number") {
-    breakdown.api = baseScore(aux_scores.api) * 2;
+    breakdown.api = baseScore(aux_scores.api) * (single_term_query ? 0.8 : 2);
   }
 
   if (typeof aux_scores?.examples === "number") {
-    breakdown.examples = baseScore(aux_scores.examples) * 0.75;
+    breakdown.examples = baseScore(aux_scores.examples) * (single_term_query ? 0.2 : 0.75);
   }
 
   if (typeof aux_scores?.styles === "number") {
-    breakdown.styles = baseScore(aux_scores.styles) * 1.25;
+    breakdown.styles = baseScore(aux_scores.styles) * (single_term_query ? 0.35 : 1.25);
   }
 
   const coverage = matchCount(tokens, [
@@ -936,10 +1088,87 @@ const collapseAuxMatches = (rows: ComponentAuxRow[]) => {
     collapsed.set(row.component_id, existing ?? row.fts_score);
   });
 
-  return [...collapsed.entries()].map(([component_id, fts_score]) => ({ component_id, fts_score }));
+  return Array.from(collapsed.entries()).map(([component_id, fts_score]) => ({ component_id, fts_score }));
+};
+
+type CacheFactory<T> = () => Promise<T> | T;
+
+class AsyncQueryCache {
+  private readonly entries = new Map<string, Promise<unknown>>();
+
+  constructor(private readonly max_entries = 256) {}
+
+  async get<T>(key: string, factory: CacheFactory<T>): Promise<T> {
+    const existing = this.entries.get(key);
+
+    if (existing) {
+      return existing as Promise<T>;
+    }
+
+    const promise = Promise.resolve().then(factory);
+    this.entries.set(key, promise);
+
+    promise.catch(() => {
+      if (this.entries.get(key) === promise) {
+        this.entries.delete(key);
+      }
+    });
+
+    if (this.entries.size > this.max_entries) {
+      const oldest = this.entries.keys().next().value as string | undefined;
+
+      if (oldest) {
+        this.entries.delete(oldest);
+      }
+    }
+
+    return promise as Promise<T>;
+  }
+}
+
+const queryCacheKey = (namespace: string, payload: unknown) => `${namespace}:${JSON.stringify(payload)}`;
+
+const normalizeQueryValue = (value: string) => value.trim().toLowerCase();
+
+const summarizeCardAlternative = (
+  card: CatalogBuildCard,
+  score?: number,
+  rationale?: string,
+  confidence?: number
+) => ({
+  component_id: card.component_id,
+  display_name: card.display_name,
+  guidance: card.guidance,
+  score: typeof score === "number" ? Number(score.toFixed(3)) : undefined,
+  confidence: Number((confidence ?? card.confidence).toFixed(3)),
+  rationale: rationale ?? card.rationale,
+  supported_themes: card.supported_themes,
+  primary_props: card.primary_props.slice(0, 2).map((prop) => ({
+    name: prop.name,
+    type: prop.type,
+    required: prop.required,
+  })),
+  composition_order: card.composition_order.slice(0, 3),
+});
+
+const isLowConfidenceRecommendation = (results: Array<{ score: number; item: CatalogComponent }>) => {
+  if (results.length < 2) {
+    return false;
+  }
+
+  const top = results[0]!;
+  const second = results[1]!;
+
+  if (top.score < 8) {
+    return true;
+  }
+
+  return top.score - second.score < 2;
 };
 
 export class CatalogSearchService {
+  private readonly cache = new AsyncQueryCache();
+
   private constructor(
     private readonly database: SqliteWasmDatabase,
     private readonly fts_version: "fts5" | "fts4"
@@ -960,9 +1189,25 @@ export class CatalogSearchService {
     await this.database.close();
   }
 
+  private cached<T>(namespace: string, payload: unknown, factory: CacheFactory<T>) {
+    return this.cache.get(queryCacheKey(namespace, payload), factory);
+  }
+
   private lookupValues(query: string) {
+    const values = new Set<string>();
+
+    expandLookupValues(normalizeLookupValue(query)).forEach((value) => {
+      values.add(value);
+    });
+
+    normalizeQueryTokens(query).forEach((term) => {
+      expandLookupValues(term).forEach((value) => {
+        values.add(value);
+      });
+    });
+
     return dedupeEvidence(
-      expandLookupValues(normalizeLookupValue(query)).map((value) => ({
+      Array.from(values).map((value) => ({
         field: "lookup",
         value,
         match_type: "term" as const,
@@ -1426,6 +1671,121 @@ export class CatalogSearchService {
     );
   }
 
+  private componentCardExact(identifier: string) {
+    const lowered = identifier.toLowerCase().trim();
+    return this.database.get<ComponentCardRow>(
+      `SELECT *
+       FROM component_cards
+       WHERE lower(component_id) = ?
+          OR lower(name) = ?
+          OR lower(display_name) = ?
+       LIMIT 1`,
+      [lowered, lowered, lowered]
+    );
+  }
+
+  private resolveComponentCards(identifiers: string[]) {
+    if (identifiers.length === 0) {
+      return [] as CatalogBuildCard[];
+    }
+
+    const lowered = identifiers.map((identifier) => identifier.toLowerCase().trim());
+    const placeholders = lowered.map(() => "?").join(", ");
+    const rows = this.database.all<ComponentCardRow>(
+      `SELECT *
+       FROM component_cards
+       WHERE lower(component_id) IN (${placeholders})
+          OR lower(name) IN (${placeholders})
+          OR lower(display_name) IN (${placeholders})`,
+      [...lowered, ...lowered, ...lowered]
+    );
+    const cards = rows.map(parseBuildCard);
+    const by_id = new Map(cards.map((card) => [card.component_id, card] as const));
+    const by_name = new Map(cards.map((card) => [card.name.toLowerCase(), card] as const));
+    const by_display = new Map(cards.map((card) => [card.display_name.toLowerCase(), card] as const));
+
+    return identifiers.flatMap((identifier) => {
+      const lowered_identifier = identifier.toLowerCase().trim();
+      const exact =
+        by_id.get(lowered_identifier) ??
+        by_name.get(lowered_identifier) ??
+        by_display.get(lowered_identifier);
+
+      return exact ? [exact] : [];
+    });
+  }
+
+  private exampleCandidates(options: ExampleSearchOptions) {
+    const lowered = options.query.toLowerCase().trim();
+    const component_filter = options.component ? this.componentCardExact(options.component) : undefined;
+    const component_id = component_filter?.component_id;
+    const query_plan = buildFtsQueryPlans(options.query);
+
+    const exact = lowered
+      ? this.database.all<ExampleRow>(
+          `SELECT e.component_id, c.display_name, c.name AS component_name, e.example_id, e.title, e.file_path, e.source, e.code, 0 AS fts_score
+           FROM component_examples e
+           JOIN components c ON c.component_id = e.component_id
+           WHERE (
+              lower(c.component_id) = ?
+              OR lower(c.name) = ?
+              OR lower(c.display_name) = ?
+              OR lower(e.example_id) = ?
+              OR lower(e.title) = ?
+           )
+           ${component_id ? "AND e.component_id = ?" : ""}
+           LIMIT 20`,
+          component_id
+            ? [lowered, lowered, lowered, lowered, lowered, component_id]
+            : [lowered, lowered, lowered, lowered, lowered]
+        )
+      : [];
+
+    const fts = runFtsPlans(
+      query_plan,
+      (fts_query) =>
+        this.database.all<ExampleRow>(
+          `SELECT e.component_id, c.display_name, c.name AS component_name, e.example_id, e.title, e.file_path, e.source, e.code,
+                  ${ftsScoreSql(this.fts_version, "component_examples_fts", [5, 6, 4, 10, 4, 3, 0.5])} AS fts_score
+           FROM component_examples_fts f
+           JOIN component_examples e
+             ON e.component_id = f.component_id
+            AND e.example_id = f.example_id
+           JOIN components c ON c.component_id = e.component_id
+           WHERE f MATCH ?
+           ${component_id ? "AND e.component_id = ?" : ""}
+           LIMIT 100`,
+          component_id ? [fts_query, component_id] : [fts_query]
+        ),
+      (row) => `${row.component_id}:${row.example_id}:${row.fts_score ?? 0}`,
+      100
+    );
+
+    const rows = exact.length > 0 || fts.length > 0 ? [...exact, ...fts] : [];
+    const deduped = new Map<string, ExampleRow>();
+
+    rows.forEach((row) => {
+      const key = `${row.component_id}:${row.example_id}`;
+      if (!deduped.has(key)) {
+        deduped.set(key, row);
+      }
+    });
+
+    if (deduped.size > 0) {
+      return Array.from(deduped.values());
+    }
+
+    return this.database.all<ExampleRow>(
+      `SELECT e.component_id, c.display_name, c.name AS component_name, e.example_id, e.title, e.file_path, e.source, e.code, 0 AS fts_score
+       FROM component_examples e
+       JOIN components c ON c.component_id = e.component_id
+       WHERE lower(e.title || ' ' || e.file_path || ' ' || e.source || ' ' || e.code) LIKE ?
+       ${component_id ? "AND e.component_id = ?" : ""}
+       LIMIT 100`,
+      component_id ? [`%${options.query.toLowerCase()}%`, component_id] : [`%${options.query.toLowerCase()}%`]
+    );
+  }
+
   async search_components(options: ComponentSearchOptions) {
     const limit = options.limit ?? 8;
     const category = normalizeCategoryFilter(options.category);
@@ -1492,7 +1852,7 @@ export class CatalogSearchService {
     });
 
     const missing_rows = this.componentRowsByIds(
-      [...candidates.entries()]
+      Array.from(candidates.entries())
         .filter(([, value]) => !value.row)
         .map(([component_id]) => component_id)
     );
@@ -1502,7 +1862,7 @@ export class CatalogSearchService {
       candidates.set(row.component_id, { ...existing, row });
     });
 
-    const ranked = [...candidates.values()]
+    const ranked = Array.from(candidates.values())
       .filter((value): value is typeof value & { row: ComponentRow } => Boolean(value.row))
       .map((candidate) => ({ candidate, item: parseComponent(candidate.row) }))
       .filter(({ item }) => {
@@ -1574,6 +1934,319 @@ export class CatalogSearchService {
     return row ? parseComponent(row) : undefined;
   }
 
+  async get_component_card(component_id_or_name: string) {
+    return this.cached("component-card", normalizeQueryValue(component_id_or_name), async () => {
+      const row = this.componentCardExact(component_id_or_name);
+      return row ? parseBuildCard(row) : undefined;
+    });
+  }
+
+  async batch_get_components(identifiers: string[]) {
+    const normalized = identifiers.map((identifier) => normalizeQueryValue(identifier)).filter(Boolean);
+
+    return this.cached("batch-components", normalized, async () => {
+      const cards = this.resolveComponentCards(identifiers);
+      const by_id = new Map(cards.map((card) => [card.component_id.toLowerCase(), card] as const));
+      const by_name = new Map(cards.map((card) => [card.name.toLowerCase(), card] as const));
+      const by_display = new Map(cards.map((card) => [card.display_name.toLowerCase(), card] as const));
+
+      const results: CatalogBuildCard[] = [];
+      const missing: string[] = [];
+      const seen = new Set<string>();
+
+      identifiers.forEach((identifier) => {
+        const lowered = normalizeQueryValue(identifier);
+
+        if (seen.has(lowered)) {
+          return;
+        }
+
+        seen.add(lowered);
+        const card = by_id.get(lowered) ?? by_name.get(lowered) ?? by_display.get(lowered);
+
+        if (card) {
+          results.push(card);
+          return;
+        }
+
+        missing.push(identifier);
+      });
+
+      return {
+        total: results.length,
+        results,
+        missing,
+      };
+    });
+  }
+
+  async compare_components(identifiers: string[], query?: string) {
+    const batch = await this.batch_get_components(identifiers);
+    const comparison = compare_component_cards(batch.results);
+
+    return {
+      query,
+      total: batch.results.length,
+      missing: batch.missing,
+      components: batch.results,
+      comparison,
+    };
+  }
+
+  async search_examples(options: ExampleSearchOptions) {
+    const limit = options.limit ?? 5;
+    const cache_key = {
+      query: normalizeQueryValue(options.query),
+      component: options.component ? normalizeQueryValue(options.component) : undefined,
+      limit,
+      debug: options.debug ?? false,
+    };
+
+    return this.cached("search-examples", cache_key, async () => {
+      const rows = this.exampleCandidates(options);
+      const ranked = rows
+        .map((row) => {
+          const scored = exampleScore(row, options.query, row.fts_score);
+          const context = exampleEvidence(row, options.query);
+          const snippet = chunkText(row.code, 280);
+
+          return {
+            item: {
+              component_id: row.component_id,
+              display_name: row.display_name,
+              component_name: row.component_name,
+              example_id: row.example_id,
+              title: row.title,
+              file_path: row.file_path,
+              source: row.source as CatalogBuildCardExample["source"],
+              snippet,
+            },
+            score: scored.score,
+            debug: options.debug ? scored.breakdown : undefined,
+            evidence: context.evidence,
+            rationale: context.rationale,
+            coverage: scored.coverage,
+            exactness: scored.exactness,
+          };
+        })
+        .sort(
+          (left, right) =>
+            compareNumbersDesc(left.score, right.score) ||
+            compareNumbersDesc(left.exactness, right.exactness) ||
+            compareNumbersDesc(left.coverage, right.coverage) ||
+            compareStrings(left.item.display_name, right.item.display_name) ||
+            compareStrings(left.item.example_id, right.item.example_id)
+        )
+        .map(({ coverage: _coverage, exactness: _exactness, ...result }) => result);
+
+      return {
+        total: ranked.length,
+        results: ranked.slice(0, limit),
+      };
+    });
+  }
+
+  async recommend_component(options: ComponentSearchOptions) {
+    const cache_key = {
+      query: normalizeQueryValue(options.query),
+      category: options.category ? normalizeQueryValue(options.category) : undefined,
+      framework: options.framework ? normalizeQueryValue(options.framework) : undefined,
+      theme: options.theme,
+      status: options.status,
+      limit: options.limit ?? 3,
+      debug: options.debug ?? false,
+    };
+
+    return this.cached("recommend-component", cache_key, async () => {
+      const limit = options.limit ?? 3;
+      const search = await this.search_components({
+        ...options,
+        limit,
+        debug: options.debug ?? false,
+      });
+      const [top, second] = search.results;
+
+      if (!top) {
+        return {
+          query: options.query,
+          total: search.total,
+          status: "needs_clarification" as const,
+          clarification: "No component was found. Try a different component name, pattern, or token.",
+          alternatives: [],
+        };
+      }
+
+      const candidate_cards = await Promise.all(
+        search.results.slice(0, 3).map((result) => this.get_component_card(result.item.component_id))
+      );
+      const low_confidence = isLowConfidenceRecommendation(search.results);
+
+      if (low_confidence) {
+        return {
+          query: options.query,
+          total: search.total,
+          status: "needs_clarification" as const,
+          clarification: `I found multiple close matches for "${options.query}". Please choose between ${search.results
+            .slice(0, 3)
+            .map((result) => result.item.display_name)
+            .join(", ")}.`,
+          alternatives: search.results.slice(0, 3).flatMap((result, index) => {
+            const card = candidate_cards[index];
+            return card
+              ? [
+                  summarizeCardAlternative(
+                    card,
+                    result.score,
+                    result.rationale,
+                    Math.max(0.1, Math.min(0.99, result.score / Math.max(top.score, 1)))
+                  ),
+                ]
+              : [];
+          }),
+        };
+      }
+
+      const recommendation_card = candidate_cards[0];
+
+      if (!recommendation_card) {
+        return {
+          query: options.query,
+          total: search.total,
+          status: "needs_clarification" as const,
+          clarification: `I couldn't build a compact card for ${top.item.display_name}. Use get_component for the full record.`,
+          alternatives: search.results.slice(0, 3).flatMap((result, index) => {
+            const card = candidate_cards[index];
+            return card
+              ? [
+                  summarizeCardAlternative(
+                    card,
+                    result.score,
+                    result.rationale,
+                    Math.max(0.1, Math.min(0.99, result.score / Math.max(top.score, 1)))
+                  ),
+                ]
+              : [];
+          }),
+        };
+      }
+
+      const confidence = second
+        ? Math.max(0.15, Math.min(0.99, 1 - second.score / Math.max(top.score, 1)))
+        : 0.95;
+
+      return {
+        query: options.query,
+        total: search.total,
+        status: "ok" as const,
+        recommendation: {
+          ...recommendation_card,
+          score: Number(top.score.toFixed(3)),
+          confidence: Number(confidence.toFixed(3)),
+          rationale: top.rationale ?? recommendation_card.rationale,
+          match_type: top.evidence?.some((entry) => entry.match_type === "exact")
+            ? ("exact" as const)
+            : ("recommended" as const),
+        },
+        alternatives: search.results.slice(1, Math.min(limit, 3)).flatMap((result, index) => {
+          const card = candidate_cards[index + 1];
+
+          return card
+            ? [
+                summarizeCardAlternative(
+                  card,
+                  result.score,
+                  result.rationale,
+                  Math.max(0.1, Math.min(0.99, result.score / Math.max(top.score, 1)))
+                ),
+              ]
+            : [];
+        }),
+      };
+    });
+  }
+
+  async build_ui_context(options: ComponentSearchOptions) {
+    const cache_key = {
+      query: normalizeQueryValue(options.query),
+      category: options.category ? normalizeQueryValue(options.category) : undefined,
+      framework: options.framework ? normalizeQueryValue(options.framework) : undefined,
+      theme: options.theme,
+      status: options.status,
+      limit: options.limit ?? 3,
+      debug: options.debug ?? false,
+    };
+
+    return this.cached("build-ui-context", cache_key, async () => {
+      const recommendation = await this.recommend_component({
+        ...options,
+        limit: options.limit ?? 3,
+      });
+
+      const primary_id =
+        recommendation.status === "ok"
+          ? recommendation.recommendation?.component_id
+          : recommendation.alternatives[0]?.component_id;
+
+      const primary_card = primary_id ? await this.get_component_card(primary_id) : undefined;
+
+      if (!primary_card) {
+        return {
+          query: options.query,
+          recommendation: recommendation.recommendation,
+          alternatives: recommendation.alternatives,
+          patterns: [],
+          examples: [],
+          composition_steps: [],
+          style_guidance: [],
+          clarification: recommendation.clarification,
+        } satisfies CatalogBuildContext;
+      }
+
+      const patterns = await this.search_patterns({
+        query: options.query,
+        limit: 3,
+        debug: false,
+      });
+      const examples = await this.search_examples({
+        query: options.query,
+        component: primary_card.component_id,
+        limit: 2,
+        debug: false,
+      });
+      const example_results =
+        examples.results.length > 0
+          ? examples.results
+          : (
+              await this.search_examples({
+                query: options.query,
+                limit: 2,
+                debug: false,
+              })
+            ).results;
+
+      return {
+        query: options.query,
+        recommendation: primary_card,
+        alternatives: recommendation.alternatives,
+        patterns: patterns.results.map((result) => result.item),
+        examples: example_results.map((result) => ({
+          id: result.item.example_id,
+          title: result.item.title,
+          file_path: result.item.file_path,
+          source: result.item.source,
+          snippet: result.item.snippet,
+          component_name: result.item.component_name,
+        })),
+        composition_steps: build_context_steps(primary_card),
+        style_guidance: [
+          ...primary_card.style_signals.map((signal) => signal.token_display_name ?? signal.style_value),
+          ...primary_card.accessibility_notes.slice(0, 3),
+        ],
+        clarification: recommendation.clarification,
+      } satisfies CatalogBuildContext;
+    });
+  }
+
   async list_component_tokens(component_id: string) {
     const rows = this.database.all<TokenRow>(
       `SELECT t.*
@@ -1616,7 +2289,7 @@ export class CatalogSearchService {
     });
 
     this.tokenRowsByIds(
-      [...candidates.entries()]
+      Array.from(candidates.entries())
         .filter(([, value]) => !value.row)
         .map(([token_id]) => token_id)
     ).forEach((row) => {
@@ -1624,7 +2297,7 @@ export class CatalogSearchService {
       candidates.set(row.token_id, { ...existing, row });
     });
 
-    const ranked = [...candidates.values()]
+    const ranked = Array.from(candidates.values())
       .filter((value): value is typeof value & { row: TokenRow } => Boolean(value.row))
       .map((candidate) => ({ candidate, item: parseToken(candidate.row) }))
       .filter(({ item }) => {
@@ -1712,7 +2385,7 @@ export class CatalogSearchService {
     });
 
     this.patternRowsByIds(
-      [...candidates.entries()]
+      Array.from(candidates.entries())
         .filter(([, value]) => !value.row)
         .map(([pattern_id]) => pattern_id)
     ).forEach((row) => {
@@ -1720,7 +2393,7 @@ export class CatalogSearchService {
       candidates.set(row.pattern_id, { ...existing, row });
     });
 
-    const ranked = [...candidates.values()]
+    const ranked = Array.from(candidates.values())
       .filter((value): value is typeof value & { row: PatternRow } => Boolean(value.row))
       .map((candidate) => {
         const item = parsePattern(candidate.row);
@@ -1784,7 +2457,7 @@ export class CatalogSearchService {
     });
 
     this.styleRowsByKeys(
-      [...candidates.entries()]
+      Array.from(candidates.entries())
         .filter(([, value]) => !value.row)
         .map(([key]) => key)
     ).forEach((row) => {
@@ -1793,7 +2466,7 @@ export class CatalogSearchService {
       candidates.set(key, { ...existing, row });
     });
 
-    const ranked = [...candidates.values()]
+    const ranked = Array.from(candidates.values())
       .filter((value): value is typeof value & { row: StyleRow } => Boolean(value.row))
       .map((candidate) => candidate.row)
       .filter((row) => {
@@ -1879,5 +2552,28 @@ export class CatalogSearchService {
     );
 
     return rows.map(parseComponent);
+  }
+
+  async warmup() {
+    const component_queries = [
+      "button",
+      "input",
+      "select",
+      "tabs",
+      "dropdown",
+      "popover",
+      "tooltip",
+      "dialog",
+      "form",
+      "table",
+    ];
+
+    await Promise.allSettled([
+      ...component_queries.map((query) => this.recommend_component({ query, limit: 3 })),
+      ...component_queries.map((query) => this.search_examples({ query, limit: 2 })),
+      ...["button", "tabs", "dropdown-menu", "select", "tooltip"].map((component_id) =>
+        this.get_component_card(component_id)
+      ),
+    ]);
   }
 }

@@ -35,7 +35,7 @@ export const link_component_tokens = (
       }
     });
 
-    return [...linked].map((token_id) => ({
+    return Array.from(linked).map((token_id) => ({
       component_id: component.component_id,
       token_id,
       relation: "uses" as const,

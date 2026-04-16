@@ -1,9 +1,13 @@
 {
   "summary": {
-    "generated_at": "2026-04-13T17:34:17.511Z",
+    "generated_at": "2026-04-14T07:58:45.773Z",
     "mean_precision_at_5": 0.2875000000000001,
     "mean_ndcg_at_10": 1,
-    "mean_first_relevant_rank": 1
+    "mean_first_relevant_rank": 1,
+    "cold_start_component_card_ms": 9.609,
+    "cold_start_component_card_bytes": 8675,
+    "warm_operation_mean_ms": 2.18775,
+    "warm_operation_mean_bytes": 7359
   },
   "results": [
     {
@@ -155,13 +159,13 @@
         "component:tabs",
         "component:select",
         "component:popover",
-        "component:radio-group",
         "component:tooltip",
         "component:toggle",
         "component:tag",
-        "component:badge",
+        "component:dropdown-menu",
         "component:alert",
-        "component:dropdown-menu"
+        "component:badge",
+        "component:button"
       ],
       "precision_at_5": 0.2,
       "ndcg_at_10": 1,
@@ -191,14 +195,14 @@
       "result_ids": [
         "component:dropdown-menu",
         "component:select",
-        "component:button-group",
         "component:avatar-group",
         "component:radio-group",
         "component:toggle-group",
-        "component:checkbox",
-        "component:switch-group",
         "component:checkbox-group",
-        "component:input"
+        "component:checkbox",
+        "component:button-group",
+        "component:switch-group",
+        "component:toggle"
       ],
       "precision_at_5": 0.2,
       "ndcg_at_10": 1,
@@ -244,9 +248,9 @@
       "result_ids": [
         "component:select",
         "component:radio-group",
+        "component:slider",
         "component:checkbox-group",
         "component:button-group",
-        "component:slider",
         "component:toggle-group",
         "component:avatar",
         "component:dropdown-menu",
@@ -286,6 +290,28 @@
       "precision_at_5": 0.2,
       "ndcg_at_10": 1,
       "first_relevant_rank": 1
+    }
+  ],
+  "warm_operation_results": [
+    {
+      "id": "get_component_card_button",
+      "ms": 0.011,
+      "bytes": 8675
+    },
+    {
+      "id": "recommend_component_button",
+      "ms": 4.008,
+      "bytes": 9833
+    },
+    {
+      "id": "build_ui_context_settings_form",
+      "ms": 4.414,
+      "bytes": 10904
+    },
+    {
+      "id": "search_examples_tabs",
+      "ms": 0.318,
+      "bytes": 24
     }
   ]
 }

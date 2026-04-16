@@ -51,7 +51,7 @@ const main = async () => {
   if (command === "benchmark") {
     const report = await runBenchmarks();
     writeStdout(
-      `Benchmarks complete. precision@5=${report.summary.mean_precision_at_5.toFixed(3)} nDCG@10=${report.summary.mean_ndcg_at_10.toFixed(3)}`
+      `Benchmarks complete. precision@5=${report.summary.mean_precision_at_5.toFixed(3)} nDCG@10=${report.summary.mean_ndcg_at_10.toFixed(3)} warm_ms=${report.summary.warm_operation_mean_ms.toFixed(3)} cold_card_ms=${report.summary.cold_start_component_card_ms.toFixed(3)}`
     );
     return;
   }

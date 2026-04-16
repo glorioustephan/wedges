@@ -45,4 +45,5 @@ const Popover = Object.assign(PopoverPrimitive.Root, {
   Close: PopoverPrimitive.Close,
 });
 
+export { Popover };
 export default Popover;

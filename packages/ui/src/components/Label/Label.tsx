@@ -117,4 +117,5 @@ const Label = Object.assign(LabelWedges, {
   Helper: HelperText,
 });
 
+export { Label };
 export default Label;

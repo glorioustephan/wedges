@@ -363,8 +363,8 @@ export const get_component_taxonomy = (
   return {
     category_ids: base.category_ids,
     pattern_ids: base.pattern_ids,
-    tags: [...new Set(inferred)],
-    intent_labels: [...new Set(base.intent_labels)],
+    tags: Array.from(new Set(inferred)),
+    intent_labels: Array.from(new Set(base.intent_labels)),
   };
 };
 
@@ -413,5 +413,5 @@ export const get_theme_aliases = (theme: string, color_name: string, scale: stri
   const key = `${color_name}.${scale}`;
   const aliases = alias_map[key] ?? [`color.${color_name}.${scale}`];
 
-  return [...new Set([...aliases, `theme.${theme}.${color_name}.${scale}`])];
+  return Array.from(new Set([...aliases, `theme.${theme}.${color_name}.${scale}`]));
 };

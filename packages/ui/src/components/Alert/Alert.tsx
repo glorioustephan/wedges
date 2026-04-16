@@ -261,4 +261,5 @@ AlertCloseButton.displayName = "AlertCloseButton";
 AlertDescription.displayName = "AlertDescription";
 AlertTitle.displayName = "AlertTitle";
 
+export { AlertWedges as Alert };
 export default AlertWedges;

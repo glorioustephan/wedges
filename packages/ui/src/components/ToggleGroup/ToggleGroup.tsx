@@ -95,4 +95,5 @@ const ToggleGroup = Object.assign(ToggleGroupWedges, {
   Item: ToggleGroupItem,
 });
 
+export { ToggleGroup };
 export default ToggleGroup;

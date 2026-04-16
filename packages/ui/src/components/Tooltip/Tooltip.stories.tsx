@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Tooltip } from "./Tooltip";
+import Tooltip from "./Tooltip";
 import { Button } from "../Button";
 
 const meta: Meta<typeof Tooltip> = {
@@ -125,5 +125,18 @@ export const LongContent: Story = {
     >
       <Button variant="outline">More info</Button>
     </Tooltip>
+  ),
+};
+
+export const IconTrigger: Story = {
+  render: () => (
+    <div className="flex items-center justify-center p-12">
+      <Tooltip.Provider delayDuration={0}>
+        <Tooltip.Root defaultOpen>
+          <Tooltip.Trigger />
+          <Tooltip.Content content="This uses the default icon-only trigger." />
+        </Tooltip.Root>
+      </Tooltip.Provider>
+    </div>
   ),
 };

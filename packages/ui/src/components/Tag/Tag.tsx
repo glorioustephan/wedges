@@ -127,4 +127,5 @@ const Tag = React.forwardRef<BadgeElement, TagProps>((props, ref) => {
 
 Tag.displayName = "Tag";
 
+export { Tag };
 export default Tag;

@@ -154,4 +154,5 @@ TabsList.displayName = TabsPrimitive.List.displayName;
 TabsTrigger.displayName = TabsPrimitive.Trigger.displayName;
 TabsContent.displayName = TabsPrimitive.Content.displayName;
 
+export { Tabs };
 export default Tabs;

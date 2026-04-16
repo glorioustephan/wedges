@@ -137,4 +137,5 @@ const CheckboxGroup = Object.assign(CheckboxGroupWedges, {
   Item: CheckboxGroupItem,
 });
 
+export { CheckboxGroup };
 export default CheckboxGroup;

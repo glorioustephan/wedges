@@ -1,6 +1,10 @@
 import { join } from "node:path";
 
 import { type CatalogArtifacts, type CatalogComponent, type CatalogToken } from "../shared/contracts.js";
+import {
+  build_component_card,
+  classifyStyleFamily,
+} from "../shared/build-cards.js";
 import { link_component_tokens } from "../shared/catalog-links.js";
 import { paths } from "../shared/paths.js";
 import { ensureDir, expandLookupValues, fileExists, unique, writeJson } from "../shared/utils.js";
@@ -21,6 +25,7 @@ type BuildReport = {
     component_subcomponents: number;
     component_examples: number;
     component_styles: number;
+    component_cards: number;
     component_exact_terms: number;
     token_exact_terms: number;
     pattern_exact_terms: number;
@@ -250,6 +255,7 @@ DROP TABLE IF EXISTS style_exact_lookup;
 DROP TABLE IF EXISTS pattern_exact_lookup;
 DROP TABLE IF EXISTS token_exact_lookup;
 DROP TABLE IF EXISTS component_exact_lookup;
+DROP TABLE IF EXISTS component_cards;
 DROP TABLE IF EXISTS component_examples;
 DROP TABLE IF EXISTS component_subcomponents;
 DROP TABLE IF EXISTS component_props;
@@ -417,6 +423,35 @@ CREATE TABLE component_styles (
   PRIMARY KEY (component_id, style_value, style_kind)
 );
 
+CREATE TABLE component_cards (
+  component_id TEXT PRIMARY KEY REFERENCES components(component_id),
+  name TEXT NOT NULL,
+  display_name TEXT NOT NULL,
+  framework TEXT NOT NULL,
+  status TEXT NOT NULL,
+  family TEXT NOT NULL,
+  source_path TEXT NOT NULL,
+  summary TEXT NOT NULL,
+  guidance TEXT NOT NULL,
+  primary_props_json TEXT NOT NULL,
+  variant_groups_json TEXT NOT NULL,
+  composition_order_json TEXT NOT NULL,
+  subcomponents_json TEXT NOT NULL,
+  examples_json TEXT NOT NULL,
+  accessibility_notes_json TEXT NOT NULL,
+  token_ids_json TEXT NOT NULL,
+  linked_tokens_json TEXT NOT NULL,
+  style_signals_json TEXT NOT NULL,
+  category_ids_json TEXT NOT NULL,
+  pattern_ids_json TEXT NOT NULL,
+  tags_json TEXT NOT NULL,
+  intent_labels_json TEXT NOT NULL,
+  supported_themes_json TEXT NOT NULL,
+  search_text TEXT NOT NULL,
+  rationale TEXT NOT NULL,
+  confidence REAL NOT NULL
+);
+
 CREATE TABLE component_exact_lookup (
   component_id TEXT NOT NULL REFERENCES components(component_id),
   field_kind TEXT NOT NULL,
@@ -501,6 +536,7 @@ ${createFtsVirtualTableSql(fts_version, "component_examples_fts", [
   "title",
   "file_path",
   "source",
+  "code",
   "search_text",
 ])}
 
@@ -533,83 +569,6 @@ ${createFtsVirtualTableSql(fts_version, "patterns_fts", [
   "search_text",
 ])}
 `;
-
-const classifyStyleFamily = (style_value: string, style_kind: string) => {
-  const lowered = style_value.toLowerCase();
-
-  if (style_kind === "design-token") {
-    return "token";
-  }
-
-  if (lowered.startsWith("--")) {
-    return "css-variable";
-  }
-
-  if (
-    lowered.startsWith("dark:") ||
-    lowered.startsWith("hover:") ||
-    lowered.startsWith("focus:") ||
-    lowered.startsWith("focus-visible:") ||
-    lowered.startsWith("disabled:") ||
-    lowered.startsWith("data-[") ||
-    lowered.startsWith("aria-") ||
-    lowered.startsWith("group-") ||
-    lowered.startsWith("peer-")
-  ) {
-    return "state";
-  }
-
-  if (/^(?:rounded|radius)/.test(lowered)) {
-    return "radius";
-  }
-
-  if (/^(?:shadow|drop-shadow|outline)/.test(lowered) || lowered.includes("shadow-")) {
-    return "shadow";
-  }
-
-  if (/^(?:duration-|ease-|animate-|transition)/.test(lowered) || lowered.includes("animate-")) {
-    return "motion";
-  }
-
-  if (
-    /^(?:p|px|py|pt|pr|pb|pl|m|mx|my|mt|mr|mb|ml|gap|space-x|space-y|min-w|max-w|w|h|size)-/.test(
-      lowered
-    )
-  ) {
-    return "spacing";
-  }
-
-  if (
-    /^(?:font-|leading-|tracking-|uppercase|lowercase|capitalize|whitespace-|text-(?:xs|sm|base|lg|xl|\d))/.test(
-      lowered
-    )
-  ) {
-    return "typography";
-  }
-
-  if (
-    /(?:bg-|text-|border-|outline-|fill-|stroke-)/.test(lowered) ||
-    /(primary|secondary|surface|destructive|neutral|white|black|red|green|blue|yellow|orange|pink|purple|gray)/.test(
-      lowered
-    )
-  ) {
-    return "color";
-  }
-
-  if (
-    /^(?:flex|grid|inline-|items-|justify-|content-|self-|place-|overflow|absolute|relative|sticky|top-|right-|bottom-|left-)/.test(
-      lowered
-    )
-  ) {
-    return "layout";
-  }
-
-  if (lowered.startsWith("wg-") || lowered.startsWith("[&")) {
-    return "custom";
-  }
-
-  return "other";
-};
 
 const validateArtifacts = (artifacts: CatalogArtifacts) => {
   const category_ids = new Set(artifacts.categories.map((category) => category.category_id));
@@ -651,6 +610,29 @@ const bm25Sql = (fts_version: "fts5" | "fts4", table: string, weights?: number[]
   return `bm25(${table}, ${weights.join(", ")})`;
 };
 
+const runtimeSchemaVersion = "2";
+
+const isCurrentRuntimeDatabase = async () => {
+  if (!(await fileExists(paths.database_path))) {
+    return false;
+  }
+
+  try {
+    const database = await SqliteWasmDatabase.open_from_file(paths.database_path);
+
+    try {
+      const schema_version = database.value<string>(
+        "SELECT value FROM metadata WHERE key = 'schema_version'"
+      );
+      return schema_version === runtimeSchemaVersion;
+    } finally {
+      await database.close();
+    }
+  } catch {
+    return false;
+  }
+};
+
 export const build_database_from_artifacts = async (artifacts?: CatalogArtifacts) => {
   const catalog = artifacts ?? (await load_catalog_artifacts());
   await ensureDir(paths.catalog_dir);
@@ -660,12 +642,14 @@ export const build_database_from_artifacts = async (artifacts?: CatalogArtifacts
   const token_links = link_component_tokens(catalog.components, catalog.tokens);
   const integrity = validateArtifacts(catalog);
   const token_map = new Map(catalog.tokens.map((token) => [token.token_id, token] as const));
+  const component_cards = catalog.components.map((component) => build_component_card(component, token_map));
   let component_exact_terms = 0;
   let token_exact_terms = 0;
   let pattern_exact_terms = 0;
   let style_exact_terms = 0;
 
   database.run("INSERT INTO metadata(key, value) VALUES (?, ?)", ["fts_version", fts_version]);
+  database.run("INSERT INTO metadata(key, value) VALUES (?, ?)", ["schema_version", "2"]);
   database.run("INSERT INTO metadata(key, value) VALUES (?, ?)", [
     "catalog_manifest",
     JSON.stringify(catalog.manifest),
@@ -915,13 +899,14 @@ export const build_database_from_artifacts = async (artifacts?: CatalogArtifacts
         ]
       );
       database.run(
-        "INSERT INTO component_examples_fts(component_id, example_id, title, file_path, source, search_text) VALUES (?, ?, ?, ?, ?, ?)",
+        "INSERT INTO component_examples_fts(component_id, example_id, title, file_path, source, code, search_text) VALUES (?, ?, ?, ?, ?, ?, ?)",
         [
           component.component_id,
           example.id,
           example.title,
           example.file_path,
           example.source,
+          example.code,
           [component.display_name, component.name, example.title, example.file_path, example.source]
             .filter(Boolean)
             .join(" "),
@@ -1017,6 +1002,40 @@ export const build_database_from_artifacts = async (artifacts?: CatalogArtifacts
       });
     });
 
+  });
+
+  component_cards.forEach((card) => {
+    database.run(
+      "INSERT INTO component_cards(component_id, name, display_name, framework, status, family, source_path, summary, guidance, primary_props_json, variant_groups_json, composition_order_json, subcomponents_json, examples_json, accessibility_notes_json, token_ids_json, linked_tokens_json, style_signals_json, category_ids_json, pattern_ids_json, tags_json, intent_labels_json, supported_themes_json, search_text, rationale, confidence) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      [
+        card.component_id,
+        card.name,
+        card.display_name,
+        card.framework,
+        card.status,
+        card.family,
+        card.source_path,
+        card.summary,
+        card.guidance,
+        JSON.stringify(card.primary_props),
+        JSON.stringify(card.variant_groups),
+        JSON.stringify(card.composition_order),
+        JSON.stringify(card.subcomponents),
+        JSON.stringify(card.examples),
+        JSON.stringify(card.accessibility_notes),
+        JSON.stringify(card.token_ids),
+        JSON.stringify(card.linked_tokens),
+        JSON.stringify(card.style_signals),
+        JSON.stringify(card.category_ids),
+        JSON.stringify(card.pattern_ids),
+        JSON.stringify(card.tags),
+        JSON.stringify(card.intent_labels),
+        JSON.stringify(card.supported_themes),
+        card.search_text,
+        card.rationale,
+        card.confidence,
+      ]
+    );
   });
 
   catalog.tokens.forEach((token) => {
@@ -1201,6 +1220,7 @@ export const build_database_from_artifacts = async (artifacts?: CatalogArtifacts
 
   await database.save(paths.database_path);
   await database.close();
+  await writeJson(join(paths.catalog_dir, "build-cards.json"), component_cards);
 
   const report: BuildReport = {
     generated_at: new Date().toISOString(),
@@ -1232,6 +1252,7 @@ export const build_database_from_artifacts = async (artifacts?: CatalogArtifacts
           total + component.utility_classes.length + component.style_hooks.length + component.token_ids.length,
         0
       ),
+      component_cards: component_cards.length,
       component_exact_terms,
       token_exact_terms,
       pattern_exact_terms,
@@ -1247,7 +1268,7 @@ export const build_database_from_artifacts = async (artifacts?: CatalogArtifacts
 };
 
 export const ensure_runtime_database = async () => {
-  if (await fileExists(paths.database_path)) {
+  if (await isCurrentRuntimeDatabase()) {
     return;
   }
 

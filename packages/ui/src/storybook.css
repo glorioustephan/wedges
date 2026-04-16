@@ -1,2 +1,62 @@
 @config "../tailwind.config.mjs";
 @import "tailwindcss";
+@import "./tailwind-theme-inline.css";
+
+@font-face {
+  font-family: "Wedges Display";
+  src: url("/fonts/circular-book.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Wedges Display";
+  src: url("/fonts/circular-medium.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Wedges Display";
+  src: url("/fonts/circular-bold.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Wedges Sans";
+  src: url("/fonts/inter-roman.var.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Wedges Sans";
+  src: url("/fonts/inter-italic.var.woff2") format("woff2");
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@layer base {
+  :root {
+    --font-display: "Wedges Display";
+    --font-sans: "Wedges Sans";
+    --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
+  }
+
+  :where(:root):not(.dark):not([data-theme="dark"]) {
+    --wg-primary: var(--wg-primary-600);
+  }
+
+  body {
+    min-height: 100dvh;
+    font-family: var(--font-sans), Inter, ui-sans-serif, system-ui, -apple-system;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}

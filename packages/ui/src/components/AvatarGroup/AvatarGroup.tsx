@@ -165,4 +165,5 @@ AvatarGroupItem.displayName = "AvatarGroupItem";
 AvatarMoreLabel.displayName = "AvatarMoreLabel";
 AvatarGroupWedges.displayName = "AvatarGroup";
 
+export { AvatarGroup };
 export default AvatarGroup;

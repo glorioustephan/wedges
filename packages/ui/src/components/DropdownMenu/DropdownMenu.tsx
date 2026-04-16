@@ -300,4 +300,5 @@ const DropdownMenu = Object.assign(DropdownMenuWedges, {
   Trigger: DropdownMenuTrigger,
 });
 
+export { DropdownMenu };
 export default DropdownMenu;

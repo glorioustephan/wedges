@@ -19,6 +19,7 @@ pnpm --filter @wedges/tomo-ui run start
 
 - JSON catalog artifacts in `catalog/`
 - A persisted SQLite WASM database at `catalog/tomo-ui.sqlite`
+- Compact build cards at `catalog/build-cards.json`
 - Normalized API, example, and style search tables with FTS-backed indices
 - Exact-match lookup tables for component APIs, token ids/aliases, patterns, and style records
 - Benchmark output at `benchmarks/results.json`
@@ -26,6 +27,12 @@ pnpm --filter @wedges/tomo-ui run start
 ## MCP Tools
 
 - `search_components`
+- `recommend_component`
+- `get_component_card`
+- `batch_get_components`
+- `compare_components`
+- `search_examples`
+- `build_ui_context`
 - `get_component`
 - `search_patterns`
 - `search_tokens`
@@ -34,4 +41,8 @@ pnpm --filter @wedges/tomo-ui run start
 - `list_categories`
 - `find_by_dependency`
 
-Search responses include evidence and a short rationale so agents can see what matched, for example an exact `Tabs.Trigger.before` subcomponent prop hit or a token-backed style hit like `overlay-focus`.
+`search_components` returns compact component cards with evidence and a short rationale so agents can see what matched, for example an exact `Tabs.Trigger.before` subcomponent prop hit or a token-backed style hit like `overlay-focus`.
+
+`recommend_component` is the quickest path for questions like "which button should we use?" because it returns the single best match plus a few compact alternatives, or a clarification when the match is ambiguous.
+
+`get_component_card` is the exact lookup path for the compact build card. `build_ui_context` is the page-building path; it bundles the best component, alternatives, examples, patterns, and composition steps so an agent can move from intent to implementation in one call, and still carries a clarification forward when the query is ambiguous.

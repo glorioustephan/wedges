@@ -68,4 +68,5 @@ const Badge = React.forwardRef<BadgeElement, BadgeProps>((props, ref) => {
 
 Badge.displayName = "Badge";
 
+export { Badge };
 export default Badge;

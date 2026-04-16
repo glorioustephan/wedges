@@ -7,6 +7,7 @@ import { CatalogSearchService } from "./search/service.js";
 const main = async () => {
   await ensure_runtime_database();
   const service = await CatalogSearchService.create();
+  await service.warmup();
   const server = create_mcp_server(service);
   const transport = new StdioServerTransport();
 

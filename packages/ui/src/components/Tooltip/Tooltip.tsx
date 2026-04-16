@@ -168,7 +168,7 @@ const TooltipWedges = React.forwardRef<TooltipElement, TooltipProps>((props, ref
 
         <TooltipTrigger
           asChild={asChild}
-          onClick={onClick as React.MouseEventHandler<HTMLButtonElement> | undefined}
+          onClick={onClick as unknown as React.MouseEventHandler<HTMLButtonElement> | undefined}
         >
           {children}
         </TooltipTrigger>

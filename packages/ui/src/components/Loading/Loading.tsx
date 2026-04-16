@@ -91,4 +91,5 @@ const Loading = React.forwardRef<LoadingElement, LoadingProps>((props, ref) => {
 });
 
 Loading.displayName = "Loading";
+export { Loading };
 export default Loading;

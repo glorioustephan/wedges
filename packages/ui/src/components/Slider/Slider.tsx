@@ -291,4 +291,5 @@ const Slider = Object.assign(SliderWedges, {
 
 Slider.displayName = "Slider";
 
+export { Slider };
 export default Slider;

@@ -258,4 +258,5 @@ const Avatar = Object.assign(AvatarWedges, {
   Status: AvatarStatus,
 });
 
+export { Avatar };
 export default Avatar;

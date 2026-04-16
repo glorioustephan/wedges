@@ -136,3 +136,121 @@ export type CatalogVariant = z.infer<typeof variant_schema>;
 export type CatalogSubcomponent = z.infer<typeof subcomponent_schema>;
 export type CatalogManifest = z.infer<typeof manifest_schema>;
 export type CatalogArtifacts = z.infer<typeof catalog_artifacts_schema>;
+
+export type CatalogComponentExample = CatalogComponent["examples"][number];
+export type CatalogComponentAccessibility = CatalogComponent["accessibility"];
+
+export type CatalogBuildCardTokenSummary = {
+  token_id: string;
+  display_name: string;
+  kind: CatalogToken["kind"];
+  raw_value: string;
+  semantic_aliases: string[];
+};
+
+export type CatalogBuildCardStyleSignal = {
+  style_value: string;
+  style_kind: "utility-class" | "style-hook" | "design-token";
+  style_family: string;
+  token_id?: string;
+  token_display_name?: string;
+};
+
+export type CatalogBuildCardExample = {
+  id: string;
+  title: string;
+  file_path: string;
+  source: CatalogComponentExample["source"];
+  snippet: string;
+  component_name?: string;
+};
+
+export type CatalogBuildCardSubcomponent = {
+  name: string;
+  local_name: string;
+  props: CatalogProp[];
+};
+
+export type CatalogBuildCard = {
+  entry_type: "component-card";
+  component_id: string;
+  name: string;
+  display_name: string;
+  framework: CatalogComponent["framework"];
+  status: CatalogComponent["status"];
+  family: string;
+  source_path: string;
+  summary: string;
+  guidance: string;
+  primary_props: CatalogProp[];
+  variant_groups: CatalogVariant[];
+  composition_order: string[];
+  subcomponents: CatalogBuildCardSubcomponent[];
+  examples: CatalogBuildCardExample[];
+  accessibility_notes: string[];
+  token_ids: string[];
+  linked_tokens: CatalogBuildCardTokenSummary[];
+  style_signals: CatalogBuildCardStyleSignal[];
+  category_ids: string[];
+  pattern_ids: string[];
+  tags: string[];
+  intent_labels: string[];
+  supported_themes: CatalogComponent["supported_themes"];
+  search_text: string;
+  rationale: string;
+  confidence: number;
+};
+
+export type CatalogBuildComparisonItem = {
+  component_id: string;
+  display_name: string;
+  guidance: string;
+  unique_props: string[];
+  unique_variant_groups: string[];
+  unique_subcomponents: string[];
+  unique_tokens: string[];
+  unique_style_signals: string[];
+  unique_accessibility_notes: string[];
+};
+
+export type CatalogBuildComparison = {
+  shared: {
+    props: string[];
+    variant_groups: string[];
+    subcomponents: string[];
+    tokens: string[];
+    style_signals: string[];
+    accessibility_notes: string[];
+  };
+  items: CatalogBuildComparisonItem[];
+};
+
+export type CatalogBuildRecommendation = CatalogBuildCard & {
+  match_type?: "exact" | "recommended";
+  score?: number;
+  confidence?: number;
+  rationale?: string;
+};
+
+export type CatalogBuildAlternative = {
+  component_id: string;
+  display_name: string;
+  guidance: string;
+  score?: number;
+  confidence?: number;
+  rationale?: string;
+  supported_themes: CatalogBuildCard["supported_themes"];
+  primary_props: Array<Pick<CatalogProp, "name" | "type" | "required">>;
+  composition_order: string[];
+};
+
+export type CatalogBuildContext = {
+  query: string;
+  recommendation?: CatalogBuildRecommendation;
+  alternatives: CatalogBuildAlternative[];
+  patterns: CatalogPattern[];
+  examples: CatalogBuildCardExample[];
+  composition_steps: string[];
+  style_guidance: string[];
+  clarification?: string;
+};

@@ -331,11 +331,9 @@ const parseDocBlock = (comment?: string) => {
 };
 
 const parsePropsObjectLiteral = (literal: string, source: CatalogProp["source"]) => {
-  const properties = [
-    ...literal.matchAll(
-      /(?:\/\*\*([\s\S]*?)\*\/\s*)?([A-Za-z_$][A-Za-z0-9_$]*)(\??):\s*([\s\S]*?);/g
-    ),
-  ];
+  const properties = Array.from(
+    literal.matchAll(/(?:\/\*\*([\s\S]*?)\*\/\s*)?([A-Za-z_$][A-Za-z0-9_$]*)(\??):\s*([\s\S]*?);/g)
+  );
 
   return properties
     .map((match) => {
@@ -522,7 +520,7 @@ const mergeProps = (...prop_sets: CatalogProp[][]) => {
     });
   });
 
-  return [...merged.values()].sort((left, right) => compareStrings(left.name, right.name));
+  return Array.from(merged.values()).sort((left, right) => compareStrings(left.name, right.name));
 };
 
 const parseDocProps = (content: string, source_text: string) => {
@@ -602,9 +600,9 @@ const parseDocMetadata = async (docs_path: string, source_map: Map<string, Compo
     description: String(parsed.data.description ?? ""),
     source_path: resolved_source_path,
     props: parseDocProps(raw, source_text),
-    example_names: [...raw.matchAll(/<PreviewComponent\s+name="([^"]+)"\s*\/>/g)].map(
-      (match) => match[1]
-    ).filter((value): value is string => Boolean(value)),
+    example_names: Array.from(raw.matchAll(/<PreviewComponent\s+name="([^"]+)"\s*\/>/g))
+      .map((match) => match[1])
+      .filter((value): value is string => Boolean(value)),
   } satisfies DocsMetadata;
 };
 
@@ -641,7 +639,7 @@ const parseDependencies = (source: string) => {
     { name: string; kind: ReturnType<typeof classify_dependency>; imported_symbols: string[] }
   >();
 
-  for (const match of source.matchAll(/import\s+([\s\S]*?)\s+from\s+["']([^"']+)["'];/g)) {
+  for (const match of Array.from(source.matchAll(/import\s+([\s\S]*?)\s+from\s+["']([^"']+)["'];/g))) {
     const clause = match[1]?.replace(/\s+/g, " ").trim() ?? "";
     const specifier = match[2] ?? "";
 
@@ -659,7 +657,7 @@ const parseDependencies = (source: string) => {
     });
   }
 
-  return [...dependencies.values()].sort((left, right) => compareStrings(left.name, right.name));
+  return Array.from(dependencies.values()).sort((left, right) => compareStrings(left.name, right.name));
 };
 
 const extractUtilityClasses = (source: string) => {
@@ -683,7 +681,7 @@ const extractUtilityClasses = (source: string) => {
     }
   }
 
-  return [...utilities].sort(compareStrings);
+  return Array.from(utilities).sort(compareStrings);
 };
 
 const extractStyleHooks = (source: string, utility_classes: string[]) => {
@@ -693,32 +691,32 @@ const extractStyleHooks = (source: string, utility_classes: string[]) => {
       .filter((token) => !/^[-]{5,}$/.test(token))
   );
 
-  for (const match of source.matchAll(/--[a-z][a-z0-9-]*/gi)) {
+  for (const match of Array.from(source.matchAll(/--[a-z][a-z0-9-]*/gi))) {
     hooks.add(match[0]);
   }
 
-  for (const match of source.matchAll(/\bwg-[a-z0-9-]+\b/gi)) {
+  for (const match of Array.from(source.matchAll(/\bwg-[a-z0-9-]+\b/gi))) {
     hooks.add(match[0]);
   }
 
-  return [...hooks].sort(compareStrings);
+  return Array.from(hooks).sort(compareStrings);
 };
 
 const extractAccessibility = (source: string) => {
   const roles = unique(
-    [...source.matchAll(/role="([^"]+)"/g)]
+    Array.from(source.matchAll(/role="([^"]+)"/g))
       .map((match) => match[1])
       .filter((value): value is string => Boolean(value))
   ).sort(compareStrings);
   const labels = unique(
-    [...source.matchAll(/aria-label(?:=|:)\s*(?:"([^"]+)"|'([^']+)'|`([^`]+)`)/g)]
+    Array.from(source.matchAll(/aria-label(?:=|:)\s*(?:"([^"]+)"|'([^']+)'|`([^`]+)`)/g))
       .map((match) => match[1] ?? match[2] ?? match[3])
       .filter((value): value is string => Boolean(value))
   ).sort(compareStrings);
   const keyboard_support = unique(
     [
-      ...source.matchAll(/e\.key\s*===\s*"([^"]+)"/g),
-      ...source.matchAll(/e\.key\s*===\s*'([^']+)'/g),
+      ...Array.from(source.matchAll(/e\.key\s*===\s*"([^"]+)"/g)),
+      ...Array.from(source.matchAll(/e\.key\s*===\s*'([^']+)'/g)),
     ]
       .map((match) => match[1])
       .filter((value): value is string => Boolean(value))
@@ -740,7 +738,7 @@ const extractAccessibility = (source: string) => {
 };
 
 const parseVariantLiterals = (type_value: string) =>
-  [...type_value.matchAll(/"([^"]+)"/g)]
+  Array.from(type_value.matchAll(/"([^"]+)"/g))
     .map((match) => match[1])
     .filter((value): value is string => Boolean(value));
 
@@ -794,10 +792,10 @@ const parseVariantsFromFile = async (variants_path: string) => {
     search_start = open_index + segment.length;
   }
 
-  return [...variants.entries()]
+  return Array.from(variants.entries())
     .map(([name, values]) => ({
       name,
-      values: [...values].sort(compareStrings),
+      values: Array.from(values).sort(compareStrings),
       source: "source" as const,
     }))
     .sort((left, right) => compareStrings(left.name, right.name));
@@ -914,7 +912,7 @@ const parseStoryMetadata = async (story_path: string) => {
   }
 
   const story_file = repoRelative(paths.repo_root, story_path);
-  const story_examples = [...raw.matchAll(/export const (\w+)/g)].map((match) => ({
+  const story_examples = Array.from(raw.matchAll(/export const (\w+)/g)).map((match) => ({
     id: `story:${slugify(match[1] ?? "story")}`,
     title: titleFromSlug(match[1] ?? "story"),
     file_path: story_file,
@@ -923,9 +921,9 @@ const parseStoryMetadata = async (story_path: string) => {
 
   return {
     props,
-    variants: [...variants.entries()].map(([name, values]) => ({
+    variants: Array.from(variants.entries()).map(([name, values]) => ({
       name,
-      values: [...values].sort(compareStrings),
+      values: Array.from(values).sort(compareStrings),
       source: "story" as const,
     })),
     examples: story_examples,
@@ -966,8 +964,8 @@ const discoverComponentSources = async () => {
 
     const index_source = await readText(index_path);
 
-    for (const match of index_source.matchAll(
-      /export\s+\{\s+default\s+as\s+(\w+)\s+\}\s+from\s+"\.\/([^"]+)";/g
+    for (const match of Array.from(
+      index_source.matchAll(/export\s+\{\s+default\s+as\s+(\w+)\s+\}\s+from\s+"\.\/([^"]+)";/g)
     )) {
       const component_name = match[1];
       const file_name = match[2];
@@ -994,7 +992,7 @@ const discoverComponentSources = async () => {
       });
     }
 
-    for (const match of index_source.matchAll(/export\s+\*\s+from\s+"\.\/([^"]+)";/g)) {
+    for (const match of Array.from(index_source.matchAll(/export\s+\*\s+from\s+"\.\/([^"]+)";/g))) {
       const file_name = match[1];
 
       if (!file_name) {
@@ -1096,10 +1094,10 @@ const buildVariants = (props: CatalogProp[], story: StoryMetadata | undefined, s
     variants.set(source_variant.name, bucket);
   }
 
-  return [...variants.entries()]
+  return Array.from(variants.entries())
     .map(([name, value]) => ({
       name,
-      values: [...value.values].sort(compareStrings),
+      values: Array.from(value.values).sort(compareStrings),
       source: value.source,
     }))
     .sort((left, right) => compareStrings(left.name, right.name));
@@ -1120,7 +1118,7 @@ const extractObjectAssignSubcomponents = (source: string, component_name: string
     return [] as Array<{ name: string; local_name: string }>;
   }
 
-  return [...object_literal.matchAll(/([A-Za-z_$][A-Za-z0-9_$]*)\s*:\s*([A-Za-z_$][A-Za-z0-9_$]*)/g)]
+  return Array.from(object_literal.matchAll(/([A-Za-z_$][A-Za-z0-9_$]*)\s*:\s*([A-Za-z_$][A-Za-z0-9_$]*)/g))
     .map((match) => ({
       name: match[1] ?? "",
       local_name: match[2] ?? "",
@@ -1129,7 +1127,7 @@ const extractObjectAssignSubcomponents = (source: string, component_name: string
 };
 
 const extractNamedComponentExports = (source: string, component_name: string) => {
-  return [...source.matchAll(/export\s+\{([\s\S]*?)\};/g)]
+  return Array.from(source.matchAll(/export\s+\{([\s\S]*?)\};/g))
     .flatMap((match) =>
       splitTopLevel(match[1] ?? "", ",").map((entry) => entry.replace(/^type\s+/, "").trim())
     )
@@ -1519,7 +1517,7 @@ export const parse_catalog_artifacts = async () => {
   const source_map = new Map(component_sources.map((source) => [source.source_path, source] as const));
   const docs_map = await loadDocsMap(source_map);
   const extra_sources = await Promise.all(
-    [...docs_map.values()]
+    Array.from(docs_map.values())
       .filter((docs) => docs.source_path && !source_map.has(docs.source_path))
       .map(async (docs) => {
         const source_path = docs.source_path!;

@@ -11,6 +11,8 @@
     "build": "turbo run build",
     "clean": "turbo clean && rimraf node_modules ./pnpm-lock.yaml ./.turbo ./coverage",
     "dev": "turbo run dev --parallel",
+    "storybook": "pnpm --dir packages/ui storybook",
+    "storybook:build": "pnpm --dir packages/ui build-storybook",
     "format": "prettier --check ./packages/**/src ./apps/** ./servers/** --cache",
     "format:fix": "prettier --write ./packages/**/src ./apps/** ./servers/** --cache",
     "lint": "turbo run lint",

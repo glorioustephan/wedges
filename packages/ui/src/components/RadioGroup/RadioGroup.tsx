@@ -222,4 +222,5 @@ const RadioGroup = Object.assign(RadioGroupWedges, {
   Item: RadioGroupItem,
 });
 
+export { RadioGroup };
 export default RadioGroup;

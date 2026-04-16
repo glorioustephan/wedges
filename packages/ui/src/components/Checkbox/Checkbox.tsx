@@ -178,4 +178,5 @@ const Checkbox = Object.assign(CheckboxWedges, {
   Item: CheckboxWedges,
 });
 
+export { Checkbox };
 export default Checkbox;

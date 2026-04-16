@@ -148,4 +148,5 @@ const ButtonGroup = Object.assign(ButtonGroupWedges, {
   Item: ButtonGroupItem,
 });
 
+export { ButtonGroup };
 export default ButtonGroup;

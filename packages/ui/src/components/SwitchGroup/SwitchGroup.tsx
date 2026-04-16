@@ -139,4 +139,5 @@ const SwitchGroup = Object.assign(SwitchGroupWedges, {
   Item: SwitchGroupItem,
 });
 
+export { SwitchGroup };
 export default SwitchGroup;
