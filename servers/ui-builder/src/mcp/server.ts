@@ -59,7 +59,7 @@ const formatComponentResult = (
 
 export const create_mcp_server = (service: CatalogSearchService) => {
   const server = new McpServer({
-    name: "tomo-ui",
+    name: "ui-builder",
     version: "0.1.0",
   });
 

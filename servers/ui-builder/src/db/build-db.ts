@@ -1274,7 +1274,7 @@ export const ensure_runtime_database = async () => {
 
   if (!(await fileExists(join(paths.catalog_dir, "components.json")))) {
     throw new Error(
-      "catalog/tomo-ui.sqlite is missing and no catalog artifacts were found. Run `pnpm --filter @wedges/tomo-ui rebuild` first."
+      "catalog/ui-builder.sqlite is missing and no catalog artifacts were found. Run `pnpm --filter @wedges/ui-builder rebuild` first."
     );
   }
 

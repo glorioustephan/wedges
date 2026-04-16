@@ -1,9 +1,9 @@
 {
   "servers": {
-    "tomo-ui": {
+    "ui-builder": {
       "type": "stdio",
       "command": "node",
-      "args": ["${workspaceFolder}/servers/tomo-ui/dist/main.js"]
+      "args": ["${workspaceFolder}/servers/ui-builder/dist/main.js"]
     }
   }
 }

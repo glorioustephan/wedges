@@ -2,7 +2,7 @@ import { build_database_from_artifacts } from "./db/build-db.js";
 import { parse_catalog_artifacts, write_catalog_artifacts } from "./catalog/catalog.js";
 import { runBenchmarks } from "./search/benchmark.js";
 
-const usage = `Usage: tomo-ui <parse-catalog|build-db|rebuild|benchmark>\n`;
+const usage = `Usage: ui-builder <parse-catalog|build-db|rebuild|benchmark>\n`;
 
 const writeStdout = (value: string) => {
   process.stdout.write(`${value}\n`);
@@ -33,7 +33,7 @@ const main = async () => {
   if (command === "build-db") {
     const report = await build_database_from_artifacts();
     writeStdout(
-      `Built tomo-ui.sqlite with ${report.record_counts.components} components and ${report.record_counts.tokens} tokens using ${report.fts_version}.`
+      `Built ui-builder.sqlite with ${report.record_counts.components} components and ${report.record_counts.tokens} tokens using ${report.fts_version}.`
     );
     return;
   }

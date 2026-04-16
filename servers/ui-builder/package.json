@@ -1,11 +1,11 @@
 {
-  "name": "@wedges/tomo-ui",
+  "name": "@wedges/ui-builder",
   "version": "0.1.0",
   "private": true,
   "type": "module",
   "description": "SQLite WASM-backed UI catalog MCP server for the Wedges UI package.",
   "bin": {
-    "tomo-ui": "./dist/main.js"
+    "ui-builder": "./dist/main.js"
   },
   "exports": {
     ".": {

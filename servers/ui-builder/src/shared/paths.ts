@@ -30,7 +30,7 @@ export const paths = {
   catalog_dir: join(package_root, "catalog"),
   benchmarks_dir: join(package_root, "benchmarks"),
   schema_path: join(package_root, "schemas/catalog.schema.json"),
-  database_path: join(package_root, "catalog/tomo-ui.sqlite"),
+  database_path: join(package_root, "catalog/ui-builder.sqlite"),
 };
 
 export const toFileHref = (path: string) => pathToFileURL(path).href;

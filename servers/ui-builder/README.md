@@ -1,24 +1,24 @@
-# tomo-ui
+# ui-builder
 
-`tomo-ui` is an MCP server and catalog toolchain for the UI source in `packages/ui`.
+`ui-builder` is an MCP server and catalog toolchain for the UI source in `packages/ui`.
 
-It requires Node.js 22+ because `@sqlite.org/sqlite-wasm` only supports modern Node runtimes and uses an in-memory database that is explicitly exported back to `catalog/tomo-ui.sqlite`.
+It requires Node.js 22+ because `@sqlite.org/sqlite-wasm` only supports modern Node runtimes and uses an in-memory database that is explicitly exported back to `catalog/ui-builder.sqlite`.
 
 ## Commands
 
 ```bash
-pnpm --filter @wedges/tomo-ui run parse-catalog
-pnpm --filter @wedges/tomo-ui run build-db
-pnpm --filter @wedges/tomo-ui run rebuild
-pnpm --filter @wedges/tomo-ui run benchmark
-pnpm --filter @wedges/tomo-ui run build
-pnpm --filter @wedges/tomo-ui run start
+pnpm --filter @wedges/ui-builder run parse-catalog
+pnpm --filter @wedges/ui-builder run build-db
+pnpm --filter @wedges/ui-builder run rebuild
+pnpm --filter @wedges/ui-builder run benchmark
+pnpm --filter @wedges/ui-builder run build
+pnpm --filter @wedges/ui-builder run start
 ```
 
 ## What It Builds
 
 - JSON catalog artifacts in `catalog/`
-- A persisted SQLite WASM database at `catalog/tomo-ui.sqlite`
+- A persisted SQLite WASM database at `catalog/ui-builder.sqlite`
 - Compact build cards at `catalog/build-cards.json`
 - Normalized API, example, and style search tables with FTS-backed indices
 - Exact-match lookup tables for component APIs, token ids/aliases, patterns, and style records

@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://wedges.local/tomo-ui/catalog.schema.json",
-  "title": "Tomo UI Catalog",
+  "$id": "https://wedges.local/ui-builder/catalog.schema.json",
+  "title": "UI Builder Catalog",
   "type": "object",
   "required": ["components", "tokens", "patterns", "categories", "manifest"],
   "properties": {

@@ -4,7 +4,7 @@ import { afterAll, beforeAll, describe, expect, it } from "@jest/globals";
 
 import { CatalogSearchService } from "./service.js";
 
-describe("tomo-ui search service", () => {
+describe("ui-builder search service", () => {
   let service: CatalogSearchService | undefined;
 
   beforeAll(async () => {

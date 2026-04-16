@@ -341,7 +341,7 @@ importers:
         specifier: ^5.4.11
         version: 5.4.21(@types/node@22.5.0)(lightningcss@1.32.0)(sass@1.77.8)
 
-  servers/tomo-ui:
+  servers/ui-builder:
     dependencies:
       '@modelcontextprotocol/sdk':
         specifier: ^1.27.1

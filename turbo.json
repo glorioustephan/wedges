@@ -23,7 +23,7 @@
     },
     "build-db": {
       "dependsOn": ["parse-catalog"],
-      "outputs": ["catalog/tomo-ui.sqlite", "catalog/build-report.json"]
+      "outputs": ["catalog/ui-builder.sqlite", "catalog/build-report.json"]
     },
     "rebuild": {
       "dependsOn": ["parse-catalog", "build-db"],
